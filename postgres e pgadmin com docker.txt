@@ -1,0 +1,20 @@
+REM Criando a network "my-network"
+docker network create --driver bridge my-network
+
+REM Criando o container postgres "postgres"
+docker run --name postgres --network=my-network -p 5433:5432 -e POSTGRES_PASSWORD=pwadmin -d postgres
+
+REM Criando o container pgadim "pgadmin"
+docker run --name pgadmin --network=my-network -p 15432:80 -e PGADMIN_DEFAULT_EMAIL=ti.brasilsuperatacado@gmail.com -e PGADMIN_DEFAULT_PASSWORD=pwadmin -d dpage/pgadmin4
+
+
+REM Acesse localhost:14532
+REM Informe o email passado no PGADMIN_DEFAULT_EMAIL
+REM Informa a senha passada em PGADMIN_DEFAULT_PASSWORD
+
+REM Adicione o servidor
+REM Hostname: postgres
+REM Port: 5432
+REM Maintence database: postgres
+REM Username: postgres
+REM Password: pwadmin
