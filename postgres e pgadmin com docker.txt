@@ -18,3 +18,10 @@ REM Port: 5432
 REM Maintence database: postgres
 REM Username: postgres
 REM Password: pwadmin
+
+
+docker network create --driver bridge network-pgadmin-postgres
+
+docker run --name postgres --network=network-pgadmin-postgres -p 5433:5432 -e POSTGRES_PASSWORD=pwadmin -d postgres
+
+docker run --name pgadmin --network=network-pgadmin-postgres -p 15432:80 -e PGADMIN_DEFAULT_EMAIL=ti.brasilsuperatacado@gmail.com -e PGADMIN_DEFAULT_PASSWORD=pwadmin -d dpage/pgadmin4
