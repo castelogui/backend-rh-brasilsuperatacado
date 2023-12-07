@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { UpdateCategoryController } from "./modules/updateCategory/UpdateCategoryController";
 import { createCategoryFactory } from "./modules/createCategory/CreateCategoryFactory";
 import { getAllCategoryFactory } from "./modules/getAllCategory/GetAllCategoriesFactory";
 import { deleteCategoryFactory } from "./modules/deleteCategory/DeleteCategoryFactory";

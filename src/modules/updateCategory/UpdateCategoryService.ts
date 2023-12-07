@@ -1,5 +1,3 @@
-import { AppDataSource } from "../../database/AppDataSource";
-import { Category } from "../../entities/Category";
 import { ICategoryRepository } from "../../repositories/ICategoryRepositories";
 
 type CategoryUpdateRequest = {
