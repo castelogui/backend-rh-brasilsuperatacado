@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { createCategoryFactory } from "./modules/createCategory/CreateCategoryFactory";
-import { getAllCategoryFactory } from "./modules/getAllCategory/GetAllCategoriesFactory";
-import { deleteCategoryFactory } from "./modules/deleteCategory/DeleteCategoryFactory";
-import { updateCategoryFactory } from "./modules/updateCategory/UpdateCategoryFactory";
-import { getOneCategoryFactory } from "./modules/getOneCategory/GetOneCategoryFactory";
+import { createCategoryFactory } from "./modules/Category/createCategory/CreateCategoryFactory";
+import { getAllCategoryFactory } from "./modules/Category/getAllCategory/GetAllCategoriesFactory";
+import { deleteCategoryFactory } from "./modules/Category/deleteCategory/DeleteCategoryFactory";
+import { updateCategoryFactory } from "./modules/Category/updateCategory/UpdateCategoryFactory";
+import { getOneCategoryFactory } from "./modules/Category/getOneCategory/GetOneCategoryFactory";
 
 const routes = Router();
 

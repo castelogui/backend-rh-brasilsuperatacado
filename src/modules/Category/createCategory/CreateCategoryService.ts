@@ -1,5 +1,5 @@
-import { Category } from "../../entities/Category";
-import { ICategoryRepository } from "../../repositories/ICategoryRepositories";
+import { Category } from "../../../entities/Category";
+import { ICategoryRepository } from "../../../repositories/ICategoryRepositories";
 
 type CategoryRequest = {
   name: string;
@@ -21,7 +21,7 @@ export class CreateCategoryService {
 
     const category = this.categoryRepository.create({
       name,
-      description
+      description,
     });
 
     return category;
