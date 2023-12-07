@@ -1,14 +1,27 @@
 import { Router } from "express";
-import { CreateCategoryController } from "./controllers/category/CreateCategoryController";
-import { GetAllCategoriesController } from "./controllers/category/GetAllCategoriesController";
-import { DeleteCategoryController } from "./controllers/category/DeleteCategoryController";
-import { UpdateCategoryController } from "./controllers/category/UpdateCategoryController";
+import { UpdateCategoryController } from "./modules/updateCategory/UpdateCategoryController";
+import { createCategoryFactory } from "./modules/createCategory/CreateCategoryFactory";
+import { getAllCategoryFactory } from "./modules/getAllCategory/GetAllCategoriesFactory";
+import { deleteCategoryFactory } from "./modules/deleteCategory/DeleteCategoryFactory";
+import { updateCategoryFactory } from "./modules/updateCategory/UpdateCategoryFactory";
+import { getOneCategoryFactory } from "./modules/getOneCategory/GetOneCategoryFactory";
 
 const routes = Router();
 
-routes.post("/categories", new CreateCategoryController().handle);
-routes.get("/categories", new GetAllCategoriesController().handle);
-routes.delete("/categories/:id", new DeleteCategoryController().handle);
-routes.put("/categories", new UpdateCategoryController().handle);
+routes.post("/categories", (request, response) =>
+  createCategoryFactory().handle(request, response)
+);
+routes.get("/categories", (request, response) =>
+  getAllCategoryFactory().handle(request, response)
+);
+routes.get("/categories/:id", (request, response) =>
+  getOneCategoryFactory().handle(request, response)
+);
+routes.delete("/categories/:id", (request, response) => {
+  deleteCategoryFactory().handle(request, response);
+});
+routes.put("/categories/:id", (request, resonse) =>
+  updateCategoryFactory().handle(request, resonse)
+);
 
 export { routes };
