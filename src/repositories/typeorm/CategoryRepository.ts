@@ -30,14 +30,13 @@ export class CategoryRepository implements ICategoryRepository {
   async delete(id: string): Promise<boolean | void> {
     const category = await repository.findOneBy({ id });
 
-    if (category) {
-      if (this.exists(category.name)) {
-        await repository.remove(category);
-        return;
-      }
+    if (!category) {
+      return false;
     }
-
-    return false;
+    if (this.exists(category.name)) {
+      await repository.remove(category);
+      return true;
+    }
   }
 
   async getOne(id: string): Promise<Category | Error> {

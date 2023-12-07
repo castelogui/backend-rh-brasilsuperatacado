@@ -6,10 +6,9 @@ export class DeleteCategoryService {
   async execute(id: string): Promise<Error | void> {
     const result = await this.categoryRepository.delete(id);
 
-    if (!result) {
+    if (result == false) {
       return new Error("Category does not exists");
     }
-
-    await this.categoryRepository.delete(id);
+    return;
   }
 }
