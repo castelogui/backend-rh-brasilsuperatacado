@@ -1,13 +1,12 @@
 import { Request, Response } from "express";
-import { CreateCategoryService } from "../../services/category/CreateCategoryService";
+import { CreateCategoryService } from "./CreateCategoryService";
 
 export class CreateCategoryController {
+  constructor(private createCategory: CreateCategoryService) {}
   async handle(req: Request, res: Response) {
     const { name, description } = req.body;
 
-    const service = new CreateCategoryService();
-
-    const result = await service.execute({ name, description });
+    const result = await this.createCategory.execute({ name, description });
 
     if (result instanceof Error) {
       return res.status(400).json(result.message);
