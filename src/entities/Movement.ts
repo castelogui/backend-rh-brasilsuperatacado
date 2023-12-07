@@ -10,7 +10,7 @@ import { v4 as uuid } from "uuid";
 import { TypeMovement } from "./TypeMovement";
 import { Item } from "./Item";
 
-@Entity("type_movement")
+@Entity("movement")
 export class Movement {
   @PrimaryColumn()
   id: string;
