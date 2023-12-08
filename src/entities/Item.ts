@@ -53,8 +53,11 @@ export class Item {
   created_at: Date;
 
   constructor() {
-    if (!this.id) {
+    if (!this.id || this.id == undefined || this.id == "") {
       this.id = uuid();
+    }
+    if (!this.created_at || this.created_at == undefined) {
+      this.created_at = new Date();
     }
   }
 }
