@@ -1,4 +1,4 @@
-import { CategoryRepository } from "../../../repositories/typeorm/CategoryRepository";
+import { CategoryRepository } from "../../../repositories/repositories/CategoryRepository";
 import { GetOneCategoryController } from "./GetOneCategoryController";
 import { GetOneCategoriesService } from "./GetOneCategoryService";
 

@@ -1,4 +1,4 @@
-import { ICategoryRepository } from "../../../repositories/ICategoryRepositories";
+import { ICategoryRepository } from "../../../repositories/Interfaces/ICategoryRepository";
 
 export class GetOneCategoriesService {
   constructor(private categoryRepository: ICategoryRepository) {}
