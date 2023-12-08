@@ -9,7 +9,7 @@
     "typeorm": "typeorm-ts-node-commonjs",
     "typeorm:mig-run": "typeorm-ts-node-commonjs migration:run -d src/database/AppDataSource.ts",
     "typeorm:mig-rev": "typeorm-ts-node-commonjs migration:revert -d src/database/AppDataSource.ts",
-    "vercel-build": "typeorm-ts-node-commonjs migration:run -d src/database/AppDataSource.ts"
+    "vercel-build": "npx typeorm migrate deploy"
   },
   "keywords": [],
   "author": "",
