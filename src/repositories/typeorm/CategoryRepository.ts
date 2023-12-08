@@ -27,17 +27,17 @@ export class CategoryRepository implements ICategoryRepository {
     return categories;
   }
 
-  async delete(id: string): Promise<boolean | void> {
+  async delete(id: string): Promise<boolean> {
     const category = await repository.findOneBy({ id });
 
-    if (category) {
-      if (this.exists(category.name)) {
-        await repository.remove(category);
-        return;
-      }
+    if (!category) {
+      return false;
     }
 
-    return false;
+    if (this.exists(category.name)) {
+      await repository.remove(category);
+      return true;
+    }
   }
 
   async getOne(id: string): Promise<Category | Error> {
