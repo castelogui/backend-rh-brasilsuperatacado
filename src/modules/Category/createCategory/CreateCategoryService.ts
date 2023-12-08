@@ -1,5 +1,5 @@
 import { Category } from "../../../entities/Category";
-import { ICategoryRepository } from "../../../repositories/ICategoryRepositories";
+import { ICategoryRepository } from "../../../repositories/Interfaces/ICategoryRepository";
 
 type CategoryRequest = {
   name: string;

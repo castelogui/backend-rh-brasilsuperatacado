@@ -7,6 +7,9 @@ import { getOneCategoryFactory } from "./modules/Category/getOneCategory/GetOneC
 
 const routes = Router();
 
+routes.get("/", (request, response) =>
+  response.json({ status: "server is running" })
+);
 routes.post("/categories", (request, response) =>
   createCategoryFactory().handle(request, response)
 );

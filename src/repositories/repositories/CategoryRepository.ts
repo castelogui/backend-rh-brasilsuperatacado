@@ -1,8 +1,9 @@
 import { AppDataSource } from "../../database/AppDataSource";
 import { Category } from "../../entities/Category";
-import { ICategoryRepository } from "../ICategoryRepositories";
+import { ICategoryRepository } from "../Interfaces/ICategoryRepository";
 
 const repository = AppDataSource.getRepository(Category);
+
 export class CategoryRepository implements ICategoryRepository {
   async exists(name: string): Promise<boolean> {
     const category = await repository.findOneBy({
@@ -27,7 +28,7 @@ export class CategoryRepository implements ICategoryRepository {
     return categories;
   }
 
-  async delete(id: string): Promise<boolean | void> {
+  async delete(id: string): Promise<boolean> {
     const category = await repository.findOneBy({ id });
 
     if (!category) {

@@ -13,6 +13,11 @@ export class CreateTypeMovement1701704971886 implements MigrationInterface {
                   isPrimary: true,
                 },
                 {
+                  name: "code",
+                  type: "varchar",
+                  isUnique: true,
+                },
+                {
                   name: "type",
                   type: "varchar",
                   isUnique: true,

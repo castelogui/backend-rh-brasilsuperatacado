@@ -1,4 +1,4 @@
-import { CategoryRepository } from "../../../repositories/typeorm/CategoryRepository";
+import { CategoryRepository } from "../../../repositories/repositories/CategoryRepository";
 import { DeleteCategoryController } from "./DeleteCategoryController";
 import { DeleteCategoryService } from "./DeleteCategoryService";
 

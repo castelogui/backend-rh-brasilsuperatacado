@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  postgres:
+    container_name: postgres
+    image: postgres
+    networks:
+      - network-pgadmin-postgres
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_PASSWORD: pwadmin
+    restart: always
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    networks:
+      - network-pgadmin-postgres
+    ports:
+      - "15432:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ti.brasilsuperatacado@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: pwadmin
+    restart: always
+
+networks:
+  network-pgadmin-postgres:
+    driver: bridge
