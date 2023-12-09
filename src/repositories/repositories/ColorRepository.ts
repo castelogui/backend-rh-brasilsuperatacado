@@ -42,7 +42,7 @@ export class ColorRepository implements IColorRepository {
 
     return color;
   }
-  async update({ id, name, description, hexadecimal }: Color): Promise<Color | Error> {
+  async update({ id, name, description, hexadecimal }): Promise<Color | Error> {
     const colorUpdate = await repository.findOneBy({id})
 
     if(!!colorUpdate == false){

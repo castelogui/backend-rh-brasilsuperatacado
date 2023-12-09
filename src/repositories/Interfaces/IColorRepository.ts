@@ -6,5 +6,5 @@ export interface IColorRepository {
   getOne(id: string): Promise<Color | Error>;
   getAll(): Promise<Color[]>;
   delete(id: string): Promise<boolean | void>;
-  update({ id, name, description, hexadecimal }: Color): Promise<Color | Error>;
+  update({ id, name, description, hexadecimal }): Promise<Color | Error>;
 }
