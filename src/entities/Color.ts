@@ -6,7 +6,7 @@ export class Color {
   @PrimaryColumn()
   id: string;
   @Column()
-  color: string;
+  name: string;
   @Column()
   description: string;
   @Column()

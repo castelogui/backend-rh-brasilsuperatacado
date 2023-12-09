@@ -12,7 +12,7 @@ export class CreateColors1701695779779 implements MigrationInterface {
             isPrimary: true,
           },
           {
-            name: "color",
+            name: "name",
             type: "varchar",
             isUnique: true,
           },
