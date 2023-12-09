@@ -23,7 +23,7 @@ export class CategoryRepository implements ICategoryRepository {
   }
 
   async getAll(): Promise<Category[]> {
-    const categories = repository.find();
+    const categories = await repository.find();
 
     return categories;
   }
@@ -34,10 +34,8 @@ export class CategoryRepository implements ICategoryRepository {
     if (!category) {
       return false;
     }
-    if (this.exists(category.name)) {
-      await repository.remove(category);
-      return true;
-    }
+    await repository.remove(category);
+    return;
   }
 
   async getOne(id: string): Promise<Category | Error> {
