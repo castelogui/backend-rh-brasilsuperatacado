@@ -33,8 +33,8 @@ export class CreateItems1701703055966 implements MigrationInterface {
             type: "uuid",
           },
           {
-            name: "size_id",
-            type: "uuid",
+            name: "size",
+            type: "string",
           },
           {
             name: "status",
@@ -57,12 +57,6 @@ export class CreateItems1701703055966 implements MigrationInterface {
             name: "fk_items_color",
             columnNames: ["color_id"],
             referencedTableName: "colors",
-            referencedColumnNames: ["id"],
-          },
-          {
-            name: "fk_items_size",
-            columnNames: ["size_id"],
-            referencedTableName: "sizes",
             referencedColumnNames: ["id"],
           },
         ],

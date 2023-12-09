@@ -9,7 +9,6 @@ import {
 import { v4 as uuid } from "uuid";
 import { Category } from "./Category";
 import { Color } from "./Color";
-import { Size } from "./Size";
 
 @Entity("items")
 export class Item {
@@ -43,11 +42,7 @@ export class Item {
   color: Color;
 
   @Column()
-  size_id: string;
-
-  @ManyToOne(() => Size, {onDelete: "CASCADE"})
-  @JoinColumn({ name: "size_id" })
-  size: Size;
+  size: string;
 
   @CreateDateColumn()
   created_at: Date;
