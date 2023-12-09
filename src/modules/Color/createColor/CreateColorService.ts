@@ -1,6 +1,5 @@
 import { Color } from "../../../entities/Color";
 import { IColorRepository } from "../../../repositories/Interfaces/IColorRepository";
-import { ColorRepository } from "../../../repositories/repositories/ColorRepository";
 
 type ColorRequest = {
   name: string;
