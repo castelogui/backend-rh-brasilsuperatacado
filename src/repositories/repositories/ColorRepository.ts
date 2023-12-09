@@ -5,7 +5,7 @@ import { IColorRepository } from "../Interfaces/IColorRepository";
 const repository = AppDataSource.getRepository(Color);
 
 export class ColorRepository implements IColorRepository {
-  async exists({ name, hexadecimal }: Color): Promise<Boolean[]> {
+  async exists({ name, hexadecimal }): Promise<Boolean[]> {
     const result_name = await repository.findOneBy({ name });
     const result_hexadecimal = await repository.findOneBy({ hexadecimal });
     return [ !!result_name, !!result_hexadecimal ];
@@ -44,6 +44,15 @@ export class ColorRepository implements IColorRepository {
   }
   async update({ id, name, description, hexadecimal }): Promise<Color | Error> {
     const colorUpdate = await repository.findOneBy({id})
+    const colorAlreadyExists = await this.exists({name, hexadecimal})
+
+    if(colorAlreadyExists[0]){
+      return new Error("There is already a color registered with this name")
+    }
+
+    if(colorAlreadyExists[1]){
+      return new Error("There is already a color registered with this hexadecimal")
+    }
 
     if(!!colorUpdate == false){
       return new Error("Color does not exists")
