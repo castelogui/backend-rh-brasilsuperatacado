@@ -8,6 +8,7 @@ import { createColorFactory } from "./modules/Color/createColor/CreateColorFacto
 import { getAllColorsFactory } from "./modules/Color/getAllColor/GetAllColorsFactory";
 import { getOneColorFactory } from "./modules/Color/getOneColor/GetOneColorFactory";
 import { updateColorFactory } from "./modules/Color/updateColor/UpdateColorFactory";
+import { deleteColorFactory } from "./modules/Color/deleteColor/DeleteColorFactory";
 
 const routes = Router();
 
@@ -41,6 +42,9 @@ routes.get("/colors/:id", (request, response) =>
 );
 routes.put("/colors/:id", (request, response) =>
   updateColorFactory().handle(request, response)
+);
+routes.delete("/colors/:id", (request, response) =>
+  deleteColorFactory().handle(request, response)
 );
 
 export { routes };
