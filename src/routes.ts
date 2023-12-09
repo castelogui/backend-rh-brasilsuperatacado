@@ -6,6 +6,7 @@ import { updateCategoryFactory } from "./modules/Category/updateCategory/UpdateC
 import { getOneCategoryFactory } from "./modules/Category/getOneCategory/GetOneCategoryFactory";
 import { createColorFactory } from "./modules/Color/createColor/CreateColorFactory";
 import { getAllColorsFactory } from "./modules/Color/getAllColor/GetAllColorsFactory";
+import { getOneColorFactory } from "./modules/Color/getOneColor/GetOneColorFactory";
 
 const routes = Router();
 
@@ -33,6 +34,9 @@ routes.post("/colors", (request, response) =>
 );
 routes.get("/colors", (request, response) =>
   getAllColorsFactory().handle(request, response)
+);
+routes.get("/colors/:id", (request, response) =>
+  getOneColorFactory().handle(request, response)
 );
 
 export { routes };
