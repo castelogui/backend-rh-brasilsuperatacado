@@ -5,6 +5,7 @@ import { deleteCategoryFactory } from "./modules/Category/deleteCategory/DeleteC
 import { updateCategoryFactory } from "./modules/Category/updateCategory/UpdateCategoryFactory";
 import { getOneCategoryFactory } from "./modules/Category/getOneCategory/GetOneCategoryFactory";
 import { createColorFactory } from "./modules/Color/createColor/CreateColorFactory";
+import { getAllColorsFactory } from "./modules/Color/getAllColor/GetAllColorsFactory";
 
 const routes = Router();
 
@@ -29,6 +30,9 @@ routes.put("/categories/:id", (request, resonse) =>
 
 routes.post("/colors", (request, response) =>
   createColorFactory().handle(request, response)
+);
+routes.get("/colors", (request, response) =>
+  getAllColorsFactory().handle(request, response)
 );
 
 export { routes };
