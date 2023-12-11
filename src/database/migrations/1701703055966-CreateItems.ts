@@ -34,7 +34,7 @@ export class CreateItems1701703055966 implements MigrationInterface {
           },
           {
             name: "size",
-            type: "string",
+            type: "varchar",
           },
           {
             name: "status",
