@@ -16,7 +16,43 @@
 </p>
 
 ## 💻 O Projeto 
+
 Um backend REST API para a equipe do RH Brasil Super Atacado gerenciar as entradas e saídas de EPIs e Uniformes de seus funcionários.
+
+## 🛫 Deploy
+
+Foi feito deploy utilizando a [Vercel][vercel] e o [Neon][neon]
+
+Primeiro crie sua conta no [Neon][neon] e adicione um projeto de banco de dados para conseguir o DATABASE_URL.
+
+Adicione o projeto na vercel com a seguinte variável de ambiente:
+- DATABASE_URL="link_do_seu_projeto_de_banco_de_dados_na_neon"
+
+Após iniciar o deploy, a vercel irá pegar as configurações do arquivo *vercel.json* e irá rodar o comando __vercel-build__ disponível no package.json.
+
+```bash
+# Arquivo vercel.json
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "src/server.ts",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "(.*)",
+      "dest": "src/server.ts"
+    }
+  ]
+}
+```
+
+```bash
+# Comando para a vercel fazer o build
+    "vercel-build": "typeorm-ts-node-commonjs migration:run -d src/database/AppDataSource.ts"
+```
 
 ## :rocket: Tecnologias
 
@@ -127,3 +163,5 @@ Este projeto está sob a MIT License. Consulte [LICENSE](https://github.com/cast
 [typescript]: https://www.typescriptlang.org/
 [typeorm]: https://typeorm.io/
 [docker-compose]: https://docs.docker.com/compose/
+[vercel]: https://vercel.com/
+[neon]: https://neon.tech/
