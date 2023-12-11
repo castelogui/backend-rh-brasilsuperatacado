@@ -3,7 +3,7 @@
 <p align="center">
   <a href="https://wakatime.com/badge/user/b889ed60-65c5-4d75-a1e7-65c986b29d59/project/018c34c8-8a85-415a-b44e-5bdb3c86249d"><img src="https://wakatime.com/badge/user/b889ed60-65c5-4d75-a1e7-65c986b29d59/project/018c34c8-8a85-415a-b44e-5bdb3c86249d.svg" alt="wakatime"></a>
   <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/castelogui/backend-rh-brasilsuperatacado">
-  <a href="https://github.com/castelogui/backend-rh-brasilsuperatacado/blob/master/LICENSE">
+  <a href="https://github.com/castelogui/backend-rh-brasilsuperatacado/blob/main/LICENCE">
     <img alt="License" src="https://img.shields.io/badge/license-MIT-brightgreen">
   </a>
   <a href="https://www.linkedin.com/in/castelo-guilherme/">
