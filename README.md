@@ -53,31 +53,31 @@ Este projeto foi desenvolvido comm as seguintes Tecnologias:
 
 | STATUS | ACTION | METHOD | ROUTE |
 |-------------|-------|--------------|--------------|
-| :heavy_multiplication_x: | cadastrar item | POST | /items |
-| :heavy_multiplication_x: | buscar itens | GET | /items |
-| :heavy_multiplication_x: | buscar item | GET | /items/:id |
-| :heavy_multiplication_x: | atualizar item | PUT | /items/:id |
-| :heavy_multiplication_x: | deletar item | DELETE | /items/:id |
+| :x: | cadastrar item | POST | /items |
+| :x: | buscar itens | GET | /items |
+| :x: | buscar item | GET | /items/:id |
+| :x: | atualizar item | PUT | /items/:id |
+| :x: | deletar item | DELETE | /items/:id |
 
 ### Tipo de Movimento
 
 | STATUS | ACTION | METHOD | ROUTE |
 |-------------|-------|--------------|--------------|
-| :heavy_multiplication_x: | cadastrar tipo movimento | POST | /typemovement |
-| :heavy_multiplication_x: | buscar tipos movimento | GET | /typemovement |
-| :heavy_multiplication_x: | buscar tipo movimento | GET | /typemovement/:id |
-| :heavy_multiplication_x: | atualizar tipo movimento | PUT | /typemovement/:id |
-| :heavy_multiplication_x: | deletar tipo movimento | DELETE | /typemovement/:id |
+| :x: | cadastrar tipo movimento | POST | /typemovement |
+| :x: | buscar tipos movimento | GET | /typemovement |
+| :x: | buscar tipo movimento | GET | /typemovement/:id |
+| :x: | atualizar tipo movimento | PUT | /typemovement/:id |
+| :x: | deletar tipo movimento | DELETE | /typemovement/:id |
 
 ### Movimento
 
 | STATUS | ACTION | METHOD | ROUTE |
 |-------------|-------|--------------|--------------|
-| :heavy_multiplication_x: | cadastrar movimento | POST | /movement |
-| :heavy_multiplication_x: | buscar movimentos | GET | /movement |
-| :heavy_multiplication_x: | buscar movimento | GET | /movement/:id |
-| :heavy_multiplication_x: | atualizar movimento | PUT | /movement/:id |
-| :heavy_multiplication_x: | deletar movimento | DELETE | /movement/:id |
+| :x: | cadastrar movimento | POST | /movement |
+| :x: | buscar movimentos | GET | /movement |
+| :x: | buscar movimento | GET | /movement/:id |
+| :x: | atualizar movimento | PUT | /movement/:id |
+| :x: | deletar movimento | DELETE | /movement/:id |
 
 ## :interrobang: Como usar
 
