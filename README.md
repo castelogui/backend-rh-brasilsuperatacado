@@ -1,24 +1,18 @@
 <h1 align="center">RH Brasil Super Atacado - Backend</h1>
+
 <p align="center">
-	
-  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/castelogui/backend-rh-brasilsuperatacado">
-
   <a href="https://wakatime.com/badge/user/b889ed60-65c5-4d75-a1e7-65c986b29d59/project/018c34c8-8a85-415a-b44e-5bdb3c86249d"><img src="https://wakatime.com/badge/user/b889ed60-65c5-4d75-a1e7-65c986b29d59/project/018c34c8-8a85-415a-b44e-5bdb3c86249d.svg" alt="wakatime"></a>
-
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/castelogui/backend-rh-brasilsuperatacado">
   <a href="https://github.com/castelogui/backend-rh-brasilsuperatacado/blob/master/LICENSE">
     <img alt="License" src="https://img.shields.io/badge/license-MIT-brightgreen">
   </a>
-	
   <a href="https://www.linkedin.com/in/castelo-guilherme/">
     <img alt="Made by castelogui" src="https://img.shields.io/badge/made%20by-castelogui-%2304D361">
   </a>
-
   <a href="https://github.com/castelogui/backend-rh-brasilsuperatacado/commits/master">
     <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/castelogui/backend-rh-brasilsuperatacado">
   </a>
-
   <img alt="Repository size" src="https://img.shields.io/github/repo-size/castelogui/backend-rh-brasilsuperatacado">
-
 </p>
 
 ## 💻 O Projeto 
