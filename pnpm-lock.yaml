@@ -8,9 +8,6 @@ dependencies:
   '@vercel/postgres':
     specifier: ^0.5.1
     version: 0.5.1
-  '@vercel/speed-insights':
-    specifier: ^1.0.1
-    version: 1.0.1
   dotenv:
     specifier: ^16.3.1
     version: 16.3.1
@@ -202,11 +199,6 @@ packages:
       bufferutil: 4.0.8
       utf-8-validate: 6.0.3
       ws: 8.14.2(bufferutil@4.0.8)(utf-8-validate@6.0.3)
-    dev: false
-
-  /@vercel/speed-insights@1.0.1:
-    resolution: {integrity: sha512-cm8KTTsDgS1AbWsgIEZuMoyPUjclzeqJihyLp0tnA21B/x9iTE8hu2S5zM+/DBzihuHxWL1dx9pCWk22ctMFWQ==}
-    requiresBuild: true
     dev: false
 
   /accepts@1.3.8:
