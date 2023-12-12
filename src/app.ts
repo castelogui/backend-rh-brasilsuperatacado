@@ -4,6 +4,8 @@ require("dotenv").config();
 
 const app = express();
 app.use(express.json());
+// Como utilizar uma rota padrão
+// app.use("/api", routes);
 app.use(routes);
 
 app.use(
