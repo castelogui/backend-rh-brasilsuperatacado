@@ -5,8 +5,14 @@ import { IItemRepository } from "../Interfaces/IItemRepository";
 const repository = AppDataSource.getRepository(Item);
 
 export class ItemRepository implements IItemRepository {
-  getOne(id: string): Promise<Item | Error> {
-    throw new Error("Method not implemented.");
+  async getOne(id: string): Promise<Item | Error> {
+    const item = await repository.findOneBy({ id });
+
+    if(!!item == false){
+      return new Error("Item does not exists")
+    }
+
+    return item;
   }
   async getAll(): Promise<Item[]> {
     const items = await repository.find({ relations: ["category", "color"] });

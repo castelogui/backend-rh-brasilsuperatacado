@@ -11,6 +11,7 @@ import { updateColorFactory } from "./modules/Color/updateColor/UpdateColorFacto
 import { deleteColorFactory } from "./modules/Color/deleteColor/DeleteColorFactory";
 import { createItemFactory } from "./modules/Item/createItem/CreateItemFactory";
 import { getAllItemFactory } from "./modules/Item/getAllItem/GetAllItemFactory";
+import { getOneItemFactory } from "./modules/Item/getOneItem/GetOneItemFactory";
 
 const routes = Router();
 
@@ -54,6 +55,9 @@ routes.post("/items", (request, response) =>
 );
 routes.get("/items", (request, response) =>
   getAllItemFactory().handle(request, response)
+);
+routes.get("/items/:id", (request, response) =>
+  getOneItemFactory().handle(request, response)
 );
 
 export { routes };
