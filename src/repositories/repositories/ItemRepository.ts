@@ -5,7 +5,37 @@ import { IItemRepository } from "../Interfaces/IItemRepository";
 const repository = AppDataSource.getRepository(Item);
 
 export class ItemRepository implements IItemRepository {
-  async exists({name, size}: Item): Promise<boolean> {
+  getOne(id: string): Promise<Item | Error> {
+    throw new Error("Method not implemented.");
+  }
+  getAll(): Promise<Item[]> {
+    throw new Error("Method not implemented.");
+  }
+  delete(id: string): Promise<boolean | void> {
+    throw new Error("Method not implemented.");
+  }
+  update({
+    id,
+    name,
+    description,
+    estoque,
+    status,
+    category_id,
+    color_id,
+    size,
+  }: {
+    id: any;
+    name: any;
+    description: any;
+    estoque: any;
+    status: any;
+    category_id: any;
+    color_id: any;
+    size: any;
+  }): Promise<Item | Error> {
+    throw new Error("Method not implemented.");
+  }
+  async exists({ name, size }: Item): Promise<boolean> {
     const item = await repository.findOneBy({ name, size });
 
     return !!item;
@@ -32,6 +62,12 @@ export class ItemRepository implements IItemRepository {
 
     await repository.save(item);
 
-    return item;
+    // Carregar as relações antes de retornar
+    const returnItem = await repository.findOne({
+      where: { id: item.id },
+      relations: ["category", "color"],
+    });
+
+    return returnItem;
   }
 }
