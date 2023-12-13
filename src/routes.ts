@@ -13,6 +13,7 @@ import { createItemFactory } from "./modules/Item/createItem/CreateItemFactory";
 import { getAllItemFactory } from "./modules/Item/getAllItem/GetAllItemFactory";
 import { getOneItemFactory } from "./modules/Item/getOneItem/GetOneItemFactory";
 import { updateItemFactory } from "./modules/Item/updateItem/UpdateItemFactory";
+import { deleteItemFactory } from "./modules/Item/deleteItem/DeleteItemFactory";
 
 const routes = Router();
 
@@ -62,6 +63,9 @@ routes.get("/items/:id", (request, response) =>
 );
 routes.put("/items/:id", (request, response) =>
   updateItemFactory().handle(request, response)
+);
+routes.delete("/items/:id", (request, response) =>
+  deleteItemFactory().handle(request, response)
 );
 
 export { routes };

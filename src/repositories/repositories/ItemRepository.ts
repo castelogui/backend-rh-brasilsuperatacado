@@ -22,8 +22,14 @@ export class ItemRepository implements IItemRepository {
 
     return items;
   }
-  async delete(id: string): Promise<boolean | void> {
-    throw new Error("Method not implemented.");
+  async delete(id: string): Promise<boolean> {
+    const item = await repository.findOneBy({ id });
+
+    if (!item) {
+      return false;
+    }
+    await repository.remove(item);
+    return;
   }
   async update({
     id,
