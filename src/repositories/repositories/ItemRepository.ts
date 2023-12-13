@@ -8,8 +8,10 @@ export class ItemRepository implements IItemRepository {
   getOne(id: string): Promise<Item | Error> {
     throw new Error("Method not implemented.");
   }
-  getAll(): Promise<Item[]> {
-    throw new Error("Method not implemented.");
+  async getAll(): Promise<Item[]> {
+    const items = await repository.find({ relations: ["category", "color"] });
+
+    return items;
   }
   delete(id: string): Promise<boolean | void> {
     throw new Error("Method not implemented.");
