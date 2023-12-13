@@ -8,9 +8,9 @@ export interface IItemRepository {
     status,
     category_id,
     color_id,
-    size_id,
+    size,
   }): Promise<Item>;
-  exists(name: string): Promise<boolean>;
+  exists({name, size}): Promise<boolean>;
   getOne(id: string): Promise<Item | Error>;
   getAll(): Promise<Item[]>;
   delete(id: string): Promise<boolean | void>;
@@ -22,6 +22,6 @@ export interface IItemRepository {
     status,
     category_id,
     color_id,
-    size_id,
+    size,
   }): Promise<Item | Error>;
 }
