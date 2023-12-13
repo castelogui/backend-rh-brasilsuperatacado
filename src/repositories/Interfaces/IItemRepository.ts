@@ -9,7 +9,7 @@ export interface IItemRepository {
     category_id,
     color_id,
     size,
-  }): Promise<Item>;
+  }): Promise<Item | Error>;
   exists({name, size}): Promise<boolean>;
   getOne(id: string): Promise<Item | Error>;
   getAll(): Promise<Item[]>;

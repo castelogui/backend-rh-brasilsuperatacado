@@ -6,7 +6,10 @@ const repository = AppDataSource.getRepository(Item);
 
 export class ItemRepository implements IItemRepository {
   async getOne(id: string): Promise<Item | Error> {
-    const item = await repository.findOneBy({ id });
+    const item = await repository.findOne({
+      where: { id },
+      relations: ["category", "color"],
+    });
 
     if (!!item == false) {
       return new Error("Item does not exists");
@@ -66,7 +69,7 @@ export class ItemRepository implements IItemRepository {
     category_id,
     color_id,
     size,
-  }: Item): Promise<Item> {
+  }: Item): Promise<Item | Error> {
     const item = repository.create({
       name,
       description,
@@ -79,11 +82,7 @@ export class ItemRepository implements IItemRepository {
 
     await repository.save(item);
 
-    // Carregar as relações antes de retornar
-    const returnItem = await repository.findOne({
-      where: { id: item.id },
-      relations: ["category", "color"],
-    });
+    const returnItem = await this.getOne(item.id);
 
     return returnItem;
   }
