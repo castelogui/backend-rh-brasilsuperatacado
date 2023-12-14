@@ -54,11 +54,11 @@ Este projeto foi desenvolvido comm as seguintes Tecnologias:
 
 | STATUS | ACTION | METHOD | ROUTE |
 |-------------|-------|--------------|--------------|
-| :x: | cadastrar item | POST | /items |
-| :x: | buscar itens | GET | /items |
-| :x: | buscar item | GET | /items/:id |
-| :x: | atualizar item | PUT | /items/:id |
-| :x: | deletar item | DELETE | /items/:id |
+| :heavy_check_mark: | cadastrar item | POST | /items |
+| :heavy_check_mark: | buscar itens | GET | /items |
+| :heavy_check_mark: | buscar item | GET | /items/:id |
+| :heavy_check_mark: | atualizar item | PUT | /items/:id |
+| :heavy_check_mark: | deletar item | DELETE | /items/:id |
 
 ### Tipo de Movimento
 
@@ -165,3 +165,9 @@ Este projeto está sob a MIT License. Consulte [LICENSE](https://github.com/cast
 [docker-compose]: https://docs.docker.com/compose/
 [vercel]: https://vercel.com/
 [neon]: https://neon.tech/
+
+-----
+
+<p align="left">
+<a href="#">#étudocrud</a>
+</p>
