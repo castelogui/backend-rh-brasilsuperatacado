@@ -5,6 +5,7 @@
   "main": "src/server.ts",
   "scripts": {
     "dev": "ts-node-dev --transpile-only src/server.ts",
+    "dev:restart": "docker-compose down && docker-compose up -d && ts-node-dev --transpile-only src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "typeorm": "typeorm-ts-node-commonjs",
     "typeorm:mig-run": "typeorm-ts-node-commonjs migration:run -d src/database/AppDataSource.ts",
