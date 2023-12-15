@@ -1,10 +1,10 @@
 import { TypeMovement } from "../../entities/TypeMovement";
 
 export interface ITypeMovementRepository {
-  create({ type, description }): Promise<TypeMovement>;
-  exists(type: string): Promise<boolean>;
+  create({ code, type, description }): Promise<TypeMovement | Error>;
+  exists({ code, type }): Promise<boolean>;
   getOne(id: string): Promise<TypeMovement | Error>;
   getAll(): Promise<TypeMovement[]>;
   delete(id: string): Promise<boolean | void>;
-  update({ id, type, description }): Promise<TypeMovement | Error>;
+  update({ id, code, type, description }): Promise<TypeMovement | Error>;
 }

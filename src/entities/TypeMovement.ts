@@ -6,6 +6,8 @@ export class TypeMovement {
   @PrimaryColumn()
   id: string;
   @Column()
+  code: string;
+  @Column()
   type: string;
   @Column()
   description: string;
