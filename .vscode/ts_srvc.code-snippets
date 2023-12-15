@@ -1,0 +1,14 @@
+{
+  "Service": {
+    "prefix": "ts_srvc",
+    "body": [
+      "export class $1Service {",
+      "  constructor(private $2: $3) {}",
+      "  async execute($4): Promise<$5> {",
+      "    // Implement your logic here",
+      "  }",
+      "}"
+    ],
+    "description": "Create Service in Module"
+  }
+}

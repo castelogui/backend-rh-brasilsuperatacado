@@ -1,0 +1,16 @@
+{
+  "Controller": {
+    "prefix": "ts_ctrl",
+    "body": [
+      "import { Request, Response } from 'express';",
+      "",
+      "export class $1Controller {",
+      "  constructor(private $2: $3) {}",
+      "  async handle(req: Request, res: Response) {",
+      "    // Implement your logic here",
+      "  }",
+      "}"
+    ],
+    "description": "Create Controller in Module"
+  }
+}

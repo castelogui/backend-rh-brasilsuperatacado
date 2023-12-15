@@ -1,0 +1,14 @@
+{
+  "Factory": {
+    "prefix": "ts_fct",
+    "body": [
+      "export const $1Factory = () => {",
+      "  const $2 = new $3();",
+      "  const $4 = new $5($2);",
+      "  const $6 = new $7($4);",
+      "  return $6;",
+      "}"
+    ],
+    "description": "Create Factory in Module"
+  }
+}
