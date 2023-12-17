@@ -18,12 +18,11 @@ export class TypeMovementRepository implements ITypeMovementRepository {
 
     return returnTypeMovement;
   }
-  async exists({ code, type }): Promise<boolean> {
-    const typeMovement = await repository.findOneBy({ code, type });
+  async exists({ code, type }): Promise<boolean[]> {
+    const typeMovement_code = await repository.findOneBy({ code });
+    const typeMovement_type = await repository.findOneBy({ type });
 
-    console.log(typeMovement);
-
-    return !!typeMovement;
+    return [!!typeMovement_code, !!typeMovement_type];
   }
   async getOne(id: string): Promise<TypeMovement | Error> {
     const typeMovement = await repository.findOneBy({ id });

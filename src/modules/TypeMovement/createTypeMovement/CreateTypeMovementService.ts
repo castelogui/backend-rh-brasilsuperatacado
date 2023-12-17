@@ -6,7 +6,10 @@ export class CreateTypeMovementService {
   async execute({ code, type, description }): Promise<TypeMovement | Error> {
     const typeMovementExists = await this.typeMovementRepository.exists({code, type});
 
-    if (typeMovementExists) {
+    if (typeMovementExists[0]) {
+      return new Error("This code already exists");
+    }
+    if (typeMovementExists[1]) {
       return new Error("This type already exists");
     }
     
