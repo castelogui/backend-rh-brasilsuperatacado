@@ -56,6 +56,22 @@ export class TypeMovementRepository implements ITypeMovementRepository {
       return new Error("Type Movement does not exists");
     }
 
+    if (code) {
+      const typeMovement_code = await repository.findOneBy({ code });
+
+      if (!!typeMovement_code && typeMovement_code.id !== id) {
+        return new Error("Already exists type movement with code");
+      }
+    }
+
+    if (type) {
+      const typeMovement_type = await repository.findOneBy({ type });
+
+      if (!!typeMovement_type && typeMovement_type.id !== id) {
+        return new Error("Already exists type movement with name");
+      }
+    }
+
     typeMovement.code = code ? code : typeMovement.code;
     typeMovement.type = type ? type : typeMovement.type;
     typeMovement.description = description
