@@ -64,11 +64,11 @@ Este projeto foi desenvolvido comm as seguintes Tecnologias:
 
 | STATUS | ACTION | METHOD | ROUTE |
 |-------------|-------|--------------|--------------|
-| :x: | cadastrar tipo movimento | POST | /typemovement |
-| :x: | buscar tipos movimento | GET | /typemovement |
-| :x: | buscar tipo movimento | GET | /typemovement/:id |
-| :x: | atualizar tipo movimento | PUT | /typemovement/:id |
-| :x: | deletar tipo movimento | DELETE | /typemovement/:id |
+| :heavy_check_mark: | cadastrar tipo movimento | POST | /typemovement |
+| :heavy_check_mark: | buscar tipos movimento | GET | /typemovement |
+| :heavy_check_mark: | buscar tipo movimento | GET | /typemovement/:id |
+| :heavy_check_mark: | atualizar tipo movimento | PUT | /typemovement/:id |
+| :heavy_check_mark: | deletar tipo movimento | DELETE | /typemovement/:id |
 
 ### Movimento
 
