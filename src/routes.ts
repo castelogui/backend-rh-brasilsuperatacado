@@ -16,6 +16,7 @@ import { updateItemFactory } from "./modules/Item/updateItem/UpdateItemFactory";
 import { deleteItemFactory } from "./modules/Item/deleteItem/DeleteItemFactory";
 import { createTypeMovementFactory } from "./modules/TypeMovement/createTypeMovement/CreateTypeMovementFactory";
 import { getAllTypeMovementFactory } from "./modules/TypeMovement/getAllTypeMovement/getAllTypeMovementFactory";
+import { getOneTypeMovementFactory } from "./modules/TypeMovement/getOneTypeMovement/GetOneTypeMovementFactory";
 
 const routes = Router();
 
@@ -75,6 +76,9 @@ routes.post("/typemovement", (request, response) =>
 );
 routes.get("/typemovement", (request, response) =>
   getAllTypeMovementFactory().handle(request, response)
+);
+routes.get("/typemovement/:id", (request, response) =>
+  getOneTypeMovementFactory().handle(request, response)
 );
 
 export { routes };
