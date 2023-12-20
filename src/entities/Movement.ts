@@ -27,7 +27,7 @@ export class Movement {
   item_id: string;
   @ManyToOne(() => Item, {onDelete: "CASCADE"})
   @JoinColumn({ name: "item_id" })
-  item: TypeMovement;
+  item: Item;
   @CreateDateColumn()
   created_at: Date;
   @CreateDateColumn()
