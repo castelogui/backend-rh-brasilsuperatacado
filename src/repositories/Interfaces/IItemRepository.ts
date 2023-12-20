@@ -10,7 +10,7 @@ export interface IItemRepository {
     color_id,
     size,
   }): Promise<Item | Error>;
-  exists({name, size}): Promise<boolean>;
+  exists({ name, size }): Promise<boolean>;
   getOne(id: string): Promise<Item | Error>;
   getAll(): Promise<Item[]>;
   delete(id: string): Promise<boolean | void>;
@@ -24,4 +24,6 @@ export interface IItemRepository {
     color_id,
     size,
   }): Promise<Item | Error>;
+  addEstoque(id: string, quantidade: number): Promise<void | Error>;
+  removeEstoque(id: string, quantidade: number): Promise<void | Error>;
 }

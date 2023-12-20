@@ -92,4 +92,22 @@ export class ItemRepository implements IItemRepository {
 
     return returnItem;
   }
+  async addEstoque(id: string, quantidade: number): Promise<void | Error> {
+    const item = await repository.findOneBy({ id });
+    if (!item) {
+      return new Error("Item does not exists");
+    }
+    item.estoque += quantidade;
+    await repository.save(item);
+    return;
+  }
+  async removeEstoque(id: string, quantidade: number): Promise<void | Error> {
+    const item = await repository.findOneBy({ id });
+    if (!item) {
+      return new Error("Item does not exists");
+    }
+    item.estoque -= quantidade;
+    await repository.save(item);
+    return;
+  }
 }
