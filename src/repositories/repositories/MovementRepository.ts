@@ -10,7 +10,7 @@ export class MovementRepository implements IMovementRepository {
     quantity,
     type_movement_id,
     item_id,
-  }: Movement): Promise<Movement> {
+  }: Movement): Promise<Movement | Error> {
     const movement = repository.create({
       description,
       quantity,
@@ -20,16 +20,27 @@ export class MovementRepository implements IMovementRepository {
 
     await repository.save(movement);
 
-    return movement;
+    const returnMovement = await this.getOne(movement.id)
+
+    return returnMovement;
   }
   exists(name: string): Promise<boolean> {
     throw new Error("Method not implemented.");
   }
-  getOne(id: string): Promise<Movement | Error> {
-    throw new Error("Method not implemented.");
+  async getOne(id: string): Promise<Movement | Error> {
+    const movement = await repository.findOne({
+      where: { id },
+      relations: ["type_movement", "item"],
+    });
+
+    if (!!movement == false) {
+      return new Error("Movement does not exists");
+    }
+
+    return movement;
   }
   async getAll(): Promise<Movement[]> {
-    const movements = await repository.find();
+    const movements = await repository.find({relations: ["type_movement", "item"]});
 
     return movements;
   }
