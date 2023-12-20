@@ -19,6 +19,11 @@ import { getAllTypeMovementFactory } from "./modules/TypeMovement/getAllTypeMove
 import { getOneTypeMovementFactory } from "./modules/TypeMovement/getOneTypeMovement/GetOneTypeMovementFactory";
 import { updateTypeMovementFactory } from "./modules/TypeMovement/updateTypeMovement/UpdateTypeMovementFactory";
 import { deleteTypeMovementFactory } from "./modules/TypeMovement/deleteTypeMovement/DeleteTypeMovementFactory";
+import { createMovementFactory } from "./modules/Movement/createMovement/CreateMovementFactory";
+import { getAllMovementFactory } from "./modules/Movement/getAllMovement/GetAllMovementFactory";
+import { getOneMovementFactory } from "./modules/Movement/getOneMovement/GetOneMovementFactory";
+import { updateMovementFactory } from "./modules/Movement/updateMovement/UpdateMovementFactory";
+import { deleteMovementFactory } from "./modules/Movement/deleteMovement/DeleteMovementFactory";
 
 const routes = Router();
 
@@ -87,6 +92,22 @@ routes.put("/typemovement/:id", (request, response) =>
 );
 routes.delete("/typemovement/:id", (request, response) =>
   deleteTypeMovementFactory().handle(request, response)
+);
+
+routes.post("/movements", (request, response) =>
+  createMovementFactory().handle(request, response)
+);
+routes.get("/movements", (request, response) =>
+  getAllMovementFactory().handle(request, response)
+);
+routes.get("/movements/:id", (request, response) =>
+  getOneMovementFactory().handle(request, response)
+);
+routes.put("/movements/:id", (request, response) =>
+  updateMovementFactory().handle(request, response)
+);
+routes.delete("/movements/:id", (request, response) =>
+  deleteMovementFactory().handle(request, response)
 );
 
 export { routes };

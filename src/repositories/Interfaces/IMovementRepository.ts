@@ -6,7 +6,7 @@ export interface IMovementRepository {
     quantity,
     type_movement_id,
     item_id,
-  }): Promise<Movement>;
+  }): Promise<Movement | Error>;
   exists(name: string): Promise<boolean>;
   getOne(id: string): Promise<Movement | Error>;
   getAll(): Promise<Movement[]>;
