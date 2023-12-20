@@ -28,8 +28,10 @@ export class MovementRepository implements IMovementRepository {
   getOne(id: string): Promise<Movement | Error> {
     throw new Error("Method not implemented.");
   }
-  getAll(): Promise<Movement[]> {
-    throw new Error("Method not implemented.");
+  async getAll(): Promise<Movement[]> {
+    const movements = await repository.find();
+
+    return movements;
   }
   delete(id: string): Promise<boolean | void> {
     throw new Error("Method not implemented.");
