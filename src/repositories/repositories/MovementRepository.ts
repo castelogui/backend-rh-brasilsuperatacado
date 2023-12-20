@@ -20,7 +20,7 @@ export class MovementRepository implements IMovementRepository {
 
     await repository.save(movement);
 
-    const returnMovement = await this.getOne(movement.id)
+    const returnMovement = await this.getOne(movement.id);
 
     return returnMovement;
   }
@@ -40,26 +40,40 @@ export class MovementRepository implements IMovementRepository {
     return movement;
   }
   async getAll(): Promise<Movement[]> {
-    const movements = await repository.find({relations: ["type_movement", "item"]});
+    const movements = await repository.find({
+      relations: ["type_movement", "item"],
+    });
 
     return movements;
   }
   delete(id: string): Promise<boolean | void> {
     throw new Error("Method not implemented.");
   }
-  update({
+  async update({
     id,
     description,
     quantity,
     type_movement_id,
     item_id,
-  }: {
-    id: any;
-    description: any;
-    quantity: any;
-    type_movement_id: any;
-    item_id: any;
   }): Promise<Movement | Error> {
-    throw new Error("Method not implemented.");
+    const movement = await repository.findOneBy({ id });
+
+    if (!!movement == false) {
+      return new Error("Movement does not exists");
+    }
+
+    movement.description = description ? description : movement.description;
+    movement.quantity = quantity ? quantity : movement.quantity;
+    movement.type_movement_id = type_movement_id
+      ? type_movement_id
+      : movement.type_movement_id;
+    movement.item_id = item_id ? item_id : movement.item_id;
+    movement.updated_at = new Date()
+
+    await repository.save(movement);
+
+    const returnMovement = await this.getOne(id);
+
+    return returnMovement;
   }
 }
