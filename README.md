@@ -74,11 +74,11 @@ Este projeto foi desenvolvido comm as seguintes Tecnologias:
 
 | STATUS | ACTION | METHOD | ROUTE |
 |-------------|-------|--------------|--------------|
-| :x: | cadastrar movimento | POST | /movement |
-| :x: | buscar movimentos | GET | /movement |
-| :x: | buscar movimento | GET | /movement/:id |
-| :x: | atualizar movimento | PUT | /movement/:id |
-| :x: | deletar movimento | DELETE | /movement/:id |
+| :heavy_check_mark: | cadastrar movimento | POST | /movement |
+| :heavy_check_mark: | buscar movimentos | GET | /movement |
+| :heavy_check_mark: | buscar movimento | GET | /movement/:id |
+| :heavy_check_mark: | atualizar movimento | PUT | /movement/:id |
+| :heavy_check_mark: | deletar movimento | DELETE | /movement/:id |
 
 ## :interrobang: Como usar
 
