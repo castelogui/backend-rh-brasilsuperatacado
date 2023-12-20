@@ -28,6 +28,8 @@ export class Movement {
   @ManyToOne(() => Item, {onDelete: "CASCADE"})
   @JoinColumn({ name: "item_id" })
   item: Item;
+  @Column()
+  item_estoque: number
   @CreateDateColumn()
   created_at: Date;
   @CreateDateColumn()
