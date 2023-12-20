@@ -15,7 +15,7 @@ export class CreateMovementService {
     quantity,
     type_movement_id,
     item_id,
-  }: MovementRequest): Promise<Movement> {
+  }: MovementRequest): Promise<Movement | Error> {
     
     const movement = await this.movementRepository.create({
       description,
