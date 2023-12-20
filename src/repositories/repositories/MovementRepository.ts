@@ -46,8 +46,14 @@ export class MovementRepository implements IMovementRepository {
 
     return movements;
   }
-  delete(id: string): Promise<boolean | void> {
-    throw new Error("Method not implemented.");
+  async delete(id: string): Promise<boolean | void> {
+    const movement = await repository.findOneBy({ id });
+
+    if (!movement) {
+      return false;
+    }
+    await repository.remove(movement);
+    return;
   }
   async update({
     id,
@@ -68,7 +74,7 @@ export class MovementRepository implements IMovementRepository {
       ? type_movement_id
       : movement.type_movement_id;
     movement.item_id = item_id ? item_id : movement.item_id;
-    movement.updated_at = new Date()
+    movement.updated_at = new Date();
 
     await repository.save(movement);
 

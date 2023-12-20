@@ -23,6 +23,7 @@ import { createMovementFactory } from "./modules/Movement/createMovement/CreateM
 import { getAllMovementFactory } from "./modules/Movement/getAllMovement/GetAllMovementFactory";
 import { getOneMovementFactory } from "./modules/Movement/getOneMovement/GetOneMovementFactory";
 import { updateMovementFactory } from "./modules/Movement/updateMovement/UpdateMovementFactory";
+import { deleteMovementFactory } from "./modules/Movement/deleteMovement/DeleteMovementFactory";
 
 const routes = Router();
 
@@ -104,6 +105,9 @@ routes.get("/movements/:id", (request, response) =>
 );
 routes.put("/movements/:id", (request, response) =>
   updateMovementFactory().handle(request, response)
+);
+routes.delete("/movements/:id", (request, response) =>
+  deleteMovementFactory().handle(request, response)
 );
 
 export { routes };
