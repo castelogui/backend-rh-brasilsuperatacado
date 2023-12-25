@@ -15,6 +15,17 @@ export class CreateColorService {
     description,
     hexadecimal,
   }: ColorRequest): Promise<Color | Error> {
+    if (!name || name == undefined || name == "" || name == null) {
+      return new Error("Request missing arguments: name");
+    }
+    if (
+      !hexadecimal ||
+      hexadecimal == undefined ||
+      hexadecimal == "" ||
+      hexadecimal == null
+    ) {
+      return new Error("Request missing arguments: hexadecimal");
+    }
     const result = await this.colorRepository.exists({
       name,
       hexadecimal,
@@ -25,6 +36,17 @@ export class CreateColorService {
     }
     if (result[1]) {
       return new Error("There is already a color with this hexadecimal");
+    }
+
+    if (
+      !description ||
+      description == undefined ||
+      description == "" ||
+      description == null
+    ) {
+      description = `${String(hexadecimal).toUpperCase()} - ${String(
+        name
+      ).toLocaleUpperCase()}`;
     }
 
     const color = this.colorRepository.create({
