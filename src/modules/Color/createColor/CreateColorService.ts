@@ -44,9 +44,9 @@ export class CreateColorService {
       description == "" ||
       description == null
     ) {
-      description = `${String(hexadecimal).toUpperCase()} - ${String(
+      description = `${String(hexadecimal).toUpperCase()} => ${String(
         name
-      ).toLocaleUpperCase()}`;
+      ).toUpperCase()}`;
     }
 
     const color = this.colorRepository.create({
