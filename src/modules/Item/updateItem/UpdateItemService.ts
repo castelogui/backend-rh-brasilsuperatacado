@@ -1,8 +1,14 @@
 import { Item } from "../../../entities/Item";
 import { IItemRepository } from "../../../repositories/Interfaces/IItemRepository";
+import { ICategoryRepository } from "../../../repositories/Interfaces/ICategoryRepository";
+import { IColorRepository } from "../../../repositories/Interfaces/IColorRepository";
 
 export class UpdateItemService {
-  constructor(private itemRepository: IItemRepository) {}
+  constructor(
+    private itemRepository: IItemRepository,
+    private categoryRepository: ICategoryRepository,
+    private colorRepository: IColorRepository
+  ) {}
   async execute({
     id,
     name,
@@ -13,10 +19,30 @@ export class UpdateItemService {
     color_id,
     size,
   }): Promise<Item | Error> {
-    const itemAlreadyExists = await this.itemRepository.exists({name, size})
+    try {
+      await this.validRequest({ name, category_id, color_id, size });
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error);
+        return new Error(error.message);
+      }
+    }
+    const categoryExists = await this.categoryRepository.getOne(
+      category_id.toString()
+    );
 
-    if(itemAlreadyExists){
-      return new Error("This item already exists")
+    if (categoryExists instanceof Error) {
+      return new Error(categoryExists.message);
+    }
+    const colorExists = await this.colorRepository.getOne(color_id.toString());
+
+    if (colorExists instanceof Error) {
+      return new Error(colorExists.message);
+    }
+
+    const itemAlreadyExists = await this.itemRepository.exists({ name, size });
+    if (itemAlreadyExists) {
+      return new Error("This item already exists");
     }
 
     const item = await this.itemRepository.update({
@@ -35,5 +61,29 @@ export class UpdateItemService {
     }
 
     return item;
+  }
+  async validRequest({
+    name,
+    category_id,
+    color_id,
+    size,
+  }): Promise<Error | void> {
+    return new Promise((resolve, reject) => {
+      const checkArgument = (arg, argName) => {
+        if (!arg) {
+          reject(new Error(`Request missing arguments: ${argName}`));
+        }
+      };
+
+      try {
+        checkArgument(name, "name");
+        checkArgument(category_id, "category_id");
+        checkArgument(color_id, "color_id");
+        checkArgument(size, "size");
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
   }
 }
