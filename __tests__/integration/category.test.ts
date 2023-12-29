@@ -50,7 +50,7 @@ describe("Category => create", () => {
   });
 });
 describe("Category => get", () => {
-  it("a list category should be searched", async () => {
+  it("should return a category", async () => {
     const category = AppDataSource.getRepository(Category).create({
       name: "Botina",
     });
@@ -65,7 +65,7 @@ describe("Category => get", () => {
     expect(response.body).toHaveProperty("description");
     expect(response.body).toHaveProperty("created_at");
   });
-  it("a list of categories must be returned", async () => {
+  it("should return a list of categories", async () => {
     const response = await supertest(app).get("/categories");
     expect(response.status).toBe(200);
 
