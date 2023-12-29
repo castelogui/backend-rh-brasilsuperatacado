@@ -80,6 +80,12 @@ describe("Category => get", () => {
       });
     }
   });
+  it("should not return any category, should return an error", async () => {
+    const response = await supertest(app).get("/categories/123");
+
+    expect(response.status).toBe(400);
+    expect(response.text).toBe('"Category does not exists"');
+  });
 });
 afterAll(async () => {
   await AppDataSource.dropDatabase();
