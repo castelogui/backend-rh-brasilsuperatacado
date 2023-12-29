@@ -87,6 +87,54 @@ describe("Category => get", () => {
     expect(response.text).toBe('"Category does not exists"');
   });
 });
+describe("Category => update", () => {
+  it("should not update the category if the id is incorrect", async () => {
+    const responseUpdate = await supertest(app).put("/categories/123456");
+
+    expect(responseUpdate.status).toBe(400);
+    expect(responseUpdate.text).toBe('"Category does not exists"');
+  });
+  it("should not update the category with an already existing name", async () => {
+    const category = AppDataSource.getRepository(Category).create({
+      name: "Bermuda",
+    });
+    const responseCreate = await supertest(app)
+      .post("/categories")
+      .send(category);
+    const id = parseResponse(responseCreate, "{").id;
+
+    const responseUpdate = await supertest(app).put(`/categories/${id}`).send({
+      name: "Calça",
+    });
+
+    expect(responseUpdate.status).toBe(400);
+    expect(responseUpdate.text).toBe(
+      '"There is already a category registered with this name"'
+    );
+  });
+  it("should update the category", async () => {
+    const nameUpdate = "Name: Camisa Social Admin";
+    const descriptionUpdate = "Description: Camisa Social Admin";
+    const category = AppDataSource.getRepository(Category).create({
+      name: "Calça Jeans",
+    });
+    const responseCreate = await supertest(app)
+      .post("/categories")
+      .send(category);
+
+    const id = parseResponse(responseCreate, "{").id;
+
+    const responseUpdate = await supertest(app).put(`/categories/${id}`).send({
+      name: nameUpdate,
+      description: descriptionUpdate,
+    });
+    const categoryUpdate: Category = parseResponse(responseUpdate, "{");
+
+    expect(responseUpdate.status).toBe(200);
+    expect(categoryUpdate.name).toEqual(nameUpdate);
+    expect(categoryUpdate.description).toEqual(descriptionUpdate);
+  });
+});
 afterAll(async () => {
   await AppDataSource.dropDatabase();
   await AppDataSource.destroy();
