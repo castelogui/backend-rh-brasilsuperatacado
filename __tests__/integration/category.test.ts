@@ -48,6 +48,14 @@ describe("Category => create", () => {
     expect(response.text).toContain("description");
     expect(response.text).toContain("created_at");
   });
+
+  it("should return an error if the name field does not exist", async () => {
+    const category = categoryRepository.create();
+    const response = await supertest(app).post("/categories").send(category);
+
+    expect(response.status).toBe(400);
+    expect(response.text).toContain('"Request missing arguments: name"');
+  });
 });
 describe("Category => get", () => {
   it("should return a category", async () => {
