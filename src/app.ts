@@ -1,8 +1,8 @@
-import express, { NextFunction, Request, Response } from "express";
+import express, { Application, NextFunction, Request, Response } from "express";
 import { routes } from "./routes";
 require("dotenv").config();
 
-const app = express();
+const app:Application = express();
 app.use(express.json());
 // Como utilizar uma rota padrão
 // app.use("/api", routes);
