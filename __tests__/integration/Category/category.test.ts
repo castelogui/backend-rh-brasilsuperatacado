@@ -1,7 +1,7 @@
 import supertest from "supertest";
-import { Category } from "../../src/entities/Category";
-import { app } from "../../src/app";
-import { AppDataSource } from "../../src/database/AppDataSource";
+import { Category } from "../../../src/entities/Category";
+import { app } from "../../../src/app";
+import { AppDataSource } from "../../../src/database/AppDataSource";
 
 function parseResponse(response: any, type: string) {
   return JSON.parse(response.text.substring(response.text.indexOf(type)));
