@@ -1,14 +1,16 @@
 import supertest from "supertest";
-import { app } from "../src/app";
-import { AppDataSource } from "../src/database/AppDataSource";
-import { Color } from "../src/entities/Color";
+import { app } from "../../../src/app";
+import { AppDataSource } from "../../../src/database/AppDataSource";
+import { Color } from "../../../src/entities/Color";
 
 function parseResponse(response: any, type: string) {
   return JSON.parse(response.text.substring(response.text.indexOf(type)));
 }
 
 const colorRepository = AppDataSource.getRepository(Color);
-
+beforeAll(async () => {
+  await AppDataSource.initialize();
+});
 describe("Color => create", () => {
   it("should be create a new color", async () => {
     const color = colorRepository.create({
@@ -53,4 +55,8 @@ describe("Color => create", () => {
       "There is already a color with this hexadecimal"
     );
   });
+});
+afterAll(async () => {
+  await AppDataSource.dropDatabase();
+  await AppDataSource.destroy();
 });
