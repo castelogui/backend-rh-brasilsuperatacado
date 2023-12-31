@@ -33,6 +33,7 @@ const config: Config = {
     "\\\\node_modules\\\\",
     "\\\\.vscode\\\\",
     "\\\\src/database/migrations\\\\",
+    "\\\\__tests__\\\\",
   ],
 
   // Indicates which provider should be used to instrument code for coverage
