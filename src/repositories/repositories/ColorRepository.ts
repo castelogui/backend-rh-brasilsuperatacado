@@ -10,8 +10,9 @@ export class ColorRepository implements IColorRepository {
     const result_hexadecimal = await repository.findOneBy({ hexadecimal });
     return [ !!result_name, !!result_hexadecimal ];
   }
-  async create({ name, description, hexadecimal }: Color): Promise<Color> {
+  async create({ id, name, description, hexadecimal }: Color): Promise<Color> {
     const colorCreated = repository.create({
+      id,
       name,
       description,
       hexadecimal,
