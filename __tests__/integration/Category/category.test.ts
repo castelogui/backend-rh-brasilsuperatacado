@@ -46,10 +46,8 @@ describe("Category => create", () => {
 
   it("should create a category with just the name", async () => {
     const category = new CategoryMock().category_3();
-    console.log(category);
 
     const response = await supertest(app).post("/categories").send(category);
-    console.log(response.body);
 
     expect(response.status).toBe(200);
     expect(response.text).toContain("id");
