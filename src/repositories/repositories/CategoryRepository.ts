@@ -11,8 +11,9 @@ export class CategoryRepository implements ICategoryRepository {
     });
     return !!category;
   }
-  async create({ name, description }): Promise<Category> {
+  async create({ id, name, description }): Promise<Category> {
     const category = repository.create({
+      id,
       name,
       description,
     });
