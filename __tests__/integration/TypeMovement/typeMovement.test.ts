@@ -55,6 +55,30 @@ describe("Type Movement => create", () => {
     expect(response.body).toBe("Request missing arguments: type");
   });
 });
+describe("Type Movement => get", () => {
+  it("should be get a movement type", async () => {
+    const typeMovement = await supertest(app)
+      .post("/typemovement")
+      .send({ code: "2", type: "Saida" });
+
+    const response = await supertest(app).get(
+      `/typemovement/${typeMovement.body.id}`
+    );
+
+    console.log(response.body);
+    expect200(response);
+  });
+  it("should be get a list of the movements types", async () => {
+    const response = await supertest(app).get("/typemovement");
+    expect(response.status).toBe(200);
+    response.body.forEach((obj: any) => {
+      Object.keys(obj).forEach((key) => {
+        expect(obj).toHaveProperty(key);
+        expect(obj[key]).not.toBeNull();
+      });
+    });
+  });
+});
 afterAll(async () => {
   await mockAppDataSource.drop();
   await mockAppDataSource.destroy();
