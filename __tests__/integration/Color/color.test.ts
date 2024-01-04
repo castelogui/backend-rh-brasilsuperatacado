@@ -18,9 +18,9 @@ beforeAll(async () => {
 });
 describe("Color => create", () => {
   it("should be create a new color", async () => {
-    const color = new ColorMock().color_1();
+    let color = new ColorMock().color_1();
 
-    const response = await supertest(app).post("/colors").send(color);
+    let response = await supertest(app).post("/colors").send(color);
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("id");
@@ -32,9 +32,9 @@ describe("Color => create", () => {
     expect(response.body.hexadecimal).toEqual(color.hexadecimal);
   });
   it("should be to create a new color and return with the id equal to the one sent", async () => {
-    const color = new ColorMock().color_2();
+    let color = new ColorMock().color_2();
 
-    const response = await supertest(app).post("/colors").send(color);
+    let response = await supertest(app).post("/colors").send(color);
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("id");
@@ -47,28 +47,52 @@ describe("Color => create", () => {
     expect(response.body.hexadecimal).toEqual(color.hexadecimal);
   });
   it("shouldn't let a color with the same name be created", async () => {
-    const color = colorRepository.create({
-      name: "Azul",
-      hexadecimal: "#00af",
-    });
+    let color = new ColorMock().color_1();
 
-    const response = await supertest(app).post("/colors").send(color);
+    let response = await supertest(app).post("/colors").send(color);
 
     expect(response.status).toBe(400);
     expect(response.body).toEqual("There is already a color with this name");
   });
   it("shouldn't let a color with the same hexadecimal be created", async () => {
-    const color = colorRepository.create({
+    let color = colorRepository.create({
       name: "Azul claro",
       hexadecimal: "#00f",
     });
 
-    const response = await supertest(app).post("/colors").send(color);
+    let response = await supertest(app).post("/colors").send(color);
 
     expect(response.status).toBe(400);
     expect(response.body).toEqual(
       "There is already a color with this hexadecimal"
     );
+  });
+});
+describe("Color => get", () => {
+  it("should return a color", async () => {
+    const color = new ColorMock().color_4();
+    const created = await supertest(app).post("/colors").send(color);
+
+    const response = await supertest(app).get(`/colors/${created.body.id}`);
+
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty("id");
+    expect(response.body).toHaveProperty("created_at");
+    expect(response.body).toHaveProperty("name");
+    expect(response.body).toHaveProperty("description");
+    expect(response.body).toHaveProperty("hexadecimal");
+  });
+  it("should return a list colors", async () => {
+    const colors = await supertest(app).get("/colors");
+
+    expect(colors.status).toBe(200);
+    expect(Array.isArray(colors.body)).toBe(true);
+  });
+  it("should not return any color with id incorrect", async () => {
+    const response = await supertest(app).get("/colors/123");
+
+    expect(response.status).toBe(400);
+    expect(response.text).toBe('"Color does not exists"');
   });
 });
 afterAll(async () => {
