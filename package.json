@@ -10,7 +10,9 @@
     "typeorm:mig-run": "typeorm-ts-node-commonjs migration:run -d src/database/AppDataSource.ts",
     "typeorm:mig-rev": "typeorm-ts-node-commonjs migration:revert -d src/database/AppDataSource.ts",
     "vercel-build": "typeorm-ts-node-commonjs migration:run -d src/database/AppDataSource.ts",
-    "test": "jest --detectOpenHandles"
+    "test": "jest --detectOpenHandles",
+    "test:category": "jest --detectOpenHandles ./__tests__/integration/Category",
+    "test:color": "jest --detectOpenHandles ./__tests__/integration/Color"
   },
   "keywords": [],
   "author": "",
