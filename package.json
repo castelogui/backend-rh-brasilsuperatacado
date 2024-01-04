@@ -12,7 +12,8 @@
     "vercel-build": "typeorm-ts-node-commonjs migration:run -d src/database/AppDataSource.ts",
     "test": "jest --detectOpenHandles",
     "test:category": "jest --detectOpenHandles ./__tests__/integration/Category",
-    "test:color": "jest --detectOpenHandles ./__tests__/integration/Color"
+    "test:color": "jest --detectOpenHandles ./__tests__/integration/Color",
+    "test:typeMovement": "jest --detectOpenHandles ./__tests__/integration/TypeMovement"
   },
   "keywords": [],
   "author": "",
