@@ -8,8 +8,15 @@ import { MockAppDataSource } from "../../mocks/mockAppDataSource";
 function parseResponse(response: any, type: string) {
   return JSON.parse(response.text.substring(response.text.indexOf(type)));
 }
+function expect200(response: any) {
+  return Object.keys(response.body).forEach((key) => {
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty(key);
+    expect(response.body[key]).not.toBeNull();
+  });
+}
 const categoryRepository = AppDataSource.getRepository(Category);
-const mockAppDataSource = new MockAppDataSource()
+const mockAppDataSource = new MockAppDataSource();
 
 beforeAll(async () => {
   await mockAppDataSource.connect();
@@ -20,23 +27,15 @@ describe("Category => create", () => {
 
     const response = await supertest(app).post("/categories").send(category);
 
-    expect(response.status).toBe(200);
-    expect(response.text).toContain("id");
-    expect(response.text).toContain("name");
-    expect(response.text).toContain("description");
-    expect(response.text).toContain("created_at");
+    expect200(response);
   });
   it("should be to create a new category and return with the id equal to the one sent", async () => {
     const category = new CategoryMock().category_2();
 
     const response = await supertest(app).post("/categories").send(category);
 
-    expect(response.status).toBe(200);
     expect(response.body.id).toEqual(category.id);
-    expect(response.text).toContain("id");
-    expect(response.text).toContain("name");
-    expect(response.text).toContain("description");
-    expect(response.text).toContain("created_at");
+    expect200(response);
   });
   it("shouldn't let a category with the same name be created", async () => {
     const category = new CategoryMock().category_1();
@@ -52,11 +51,7 @@ describe("Category => create", () => {
 
     const response = await supertest(app).post("/categories").send(category);
 
-    expect(response.status).toBe(200);
-    expect(response.text).toContain("id");
-    expect(response.text).toContain("name");
-    expect(response.text).toContain("description");
-    expect(response.text).toContain("created_at");
+    expect200(response);
   });
 
   it("should return an error if the name field does not exist", async () => {
@@ -76,11 +71,7 @@ describe("Category => get", () => {
 
     const response = await supertest(app).get(`/categories/${id}`);
 
-    expect(response.status).toBe(200);
-    expect(response.body).toHaveProperty("id");
-    expect(response.body).toHaveProperty("name");
-    expect(response.body).toHaveProperty("description");
-    expect(response.body).toHaveProperty("created_at");
+    expect200(response);
   });
   it("should return a list of categories", async () => {
     const response = await supertest(app).get("/categories");
@@ -114,9 +105,7 @@ describe("Category => update", () => {
   it("should not update the category with an already existing name", async () => {
     const category = new CategoryMock().category_5();
 
-    await supertest(app)
-      .post("/categories")
-      .send(category);
+    await supertest(app).post("/categories").send(category);
 
     const responseUpdate = await supertest(app)
       .put(`/categories/${category.id}`)
@@ -147,7 +136,7 @@ describe("Category => update", () => {
     });
     const categoryUpdate: Category = parseResponse(responseUpdate, "{");
 
-    expect(responseUpdate.status).toBe(200);
+    expect200(responseUpdate);
     expect(categoryUpdate.name).toEqual(nameUpdate);
     expect(categoryUpdate.description).toEqual(descriptionUpdate);
   });
