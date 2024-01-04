@@ -45,4 +45,7 @@ export class ColorMock {
   color_6() {
     return colorRepository.create({ name: "Amarelo", hexadecimal: "#0ff" });
   }
+  color_7() {
+    return colorRepository.create({ name: "Rosa", hexadecimal: "#00f" });
+  }
 }
