@@ -3,13 +3,16 @@ import { Category } from "../../../src/entities/Category";
 import { app } from "../../../src/app";
 import { AppDataSource } from "../../../src/database/AppDataSource";
 import { CategoryMock } from "../../mocks/mockEntities";
+import { MockAppDataSource } from "../../mocks/mockAppDataSource";
 
 function parseResponse(response: any, type: string) {
   return JSON.parse(response.text.substring(response.text.indexOf(type)));
 }
 const categoryRepository = AppDataSource.getRepository(Category);
+const mockAppDataSource = new MockAppDataSource()
+
 beforeAll(async () => {
-  await AppDataSource.initialize();
+  await mockAppDataSource.connect();
 });
 describe("Category => create", () => {
   it("should be create a new category", async () => {
@@ -170,6 +173,6 @@ describe("Category => delete", () => {
   });
 });
 afterAll(async () => {
-  await AppDataSource.dropDatabase();
-  await AppDataSource.destroy();
+  await mockAppDataSource.drop();
+  await mockAppDataSource.destroy();
 });
