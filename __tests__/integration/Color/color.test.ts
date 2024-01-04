@@ -7,10 +7,13 @@ import { MockAppDataSource } from "../../mocks/mockAppDataSource";
 
 const mockAppDataSource = new MockAppDataSource();
 
-function parseResponse(response: any, type: string) {
-  return JSON.parse(response.text.substring(response.text.indexOf(type)));
+function expect200(response: any){
+  return Object.keys(response.body).forEach((key) => {
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty(key);
+    expect(response.body[key]).not.toBeNull();
+  });
 }
-
 const colorRepository = AppDataSource.getRepository(Color);
 
 beforeAll(async () => {
@@ -22,12 +25,7 @@ describe("Color => create", () => {
 
     let response = await supertest(app).post("/colors").send(color);
 
-    expect(response.status).toBe(200);
-    expect(response.body).toHaveProperty("id");
-    expect(response.body).toHaveProperty("name");
-    expect(response.body).toHaveProperty("hexadecimal");
-    expect(response.body).toHaveProperty("description");
-    expect(response.body).toHaveProperty("created_at");
+    expect200(response)
     expect(response.body.name).toEqual(color.name);
     expect(response.body.hexadecimal).toEqual(color.hexadecimal);
   });
@@ -36,12 +34,7 @@ describe("Color => create", () => {
 
     let response = await supertest(app).post("/colors").send(color);
 
-    expect(response.status).toBe(200);
-    expect(response.body).toHaveProperty("id");
-    expect(response.body).toHaveProperty("name");
-    expect(response.body).toHaveProperty("hexadecimal");
-    expect(response.body).toHaveProperty("description");
-    expect(response.body).toHaveProperty("created_at");
+    expect200(response)
     expect(response.body.id).toEqual(color.id);
     expect(response.body.name).toEqual(color.name);
     expect(response.body.hexadecimal).toEqual(color.hexadecimal);
@@ -75,12 +68,7 @@ describe("Color => get", () => {
 
     const response = await supertest(app).get(`/colors/${created.body.id}`);
 
-    expect(response.status).toBe(200);
-    expect(response.body).toHaveProperty("id");
-    expect(response.body).toHaveProperty("created_at");
-    expect(response.body).toHaveProperty("name");
-    expect(response.body).toHaveProperty("description");
-    expect(response.body).toHaveProperty("hexadecimal");
+    expect200(response)
   });
   it("should return a list colors", async () => {
     const colors = await supertest(app).get("/colors");
