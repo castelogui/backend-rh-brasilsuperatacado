@@ -2,34 +2,49 @@ import supertest from "supertest";
 import { app } from "../../../src/app";
 import { AppDataSource } from "../../../src/database/AppDataSource";
 import { Color } from "../../../src/entities/Color";
+import { ColorMock } from "../../mocks/mockEntities";
+import { MockAppDataSource } from "../../mocks/mockAppDataSource";
+
+const mockAppDataSource = new MockAppDataSource();
 
 function parseResponse(response: any, type: string) {
   return JSON.parse(response.text.substring(response.text.indexOf(type)));
 }
 
 const colorRepository = AppDataSource.getRepository(Color);
+
 beforeAll(async () => {
-  await AppDataSource.initialize();
+  await mockAppDataSource.connect();
 });
 describe("Color => create", () => {
   it("should be create a new color", async () => {
-    const color = colorRepository.create({
-      name: "Azul",
-      hexadecimal: "#00f",
-    });
+    const color = new ColorMock().color_1();
 
     const response = await supertest(app).post("/colors").send(color);
 
-    const colorCreate: Color = parseResponse(response, "{");
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty("id");
+    expect(response.body).toHaveProperty("name");
+    expect(response.body).toHaveProperty("hexadecimal");
+    expect(response.body).toHaveProperty("description");
+    expect(response.body).toHaveProperty("created_at");
+    expect(response.body.name).toEqual(color.name);
+    expect(response.body.hexadecimal).toEqual(color.hexadecimal);
+  });
+  it("should be to create a new color and return with the id equal to the one sent", async () => {
+    const color = new ColorMock().color_2();
+
+    const response = await supertest(app).post("/colors").send(color);
 
     expect(response.status).toBe(200);
-    expect(colorCreate).toHaveProperty("id");
-    expect(colorCreate).toHaveProperty("name");
-    expect(colorCreate).toHaveProperty("hexadecimal");
-    expect(colorCreate).toHaveProperty("description");
-    expect(colorCreate).toHaveProperty("created_at");
-    expect(colorCreate.name).toEqual(color.name);
-    expect(colorCreate.hexadecimal).toEqual(color.hexadecimal);
+    expect(response.body).toHaveProperty("id");
+    expect(response.body).toHaveProperty("name");
+    expect(response.body).toHaveProperty("hexadecimal");
+    expect(response.body).toHaveProperty("description");
+    expect(response.body).toHaveProperty("created_at");
+    expect(response.body.id).toEqual(color.id);
+    expect(response.body.name).toEqual(color.name);
+    expect(response.body.hexadecimal).toEqual(color.hexadecimal);
   });
   it("shouldn't let a color with the same name be created", async () => {
     const color = colorRepository.create({
@@ -57,6 +72,6 @@ describe("Color => create", () => {
   });
 });
 afterAll(async () => {
-  await AppDataSource.dropDatabase();
-  await AppDataSource.destroy();
+  await mockAppDataSource.drop();
+  await mockAppDataSource.destroy();
 });
