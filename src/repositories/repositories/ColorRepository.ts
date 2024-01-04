@@ -47,6 +47,10 @@ export class ColorRepository implements IColorRepository {
     const colorUpdate = await repository.findOneBy({id})
     const colorAlreadyExists = await this.exists({name, hexadecimal})
 
+    if(!!colorUpdate == false){
+      return new Error("Color does not exists")
+    }
+
     if(colorAlreadyExists[0]){
       return new Error("There is already a color registered with this name")
     }
@@ -55,9 +59,6 @@ export class ColorRepository implements IColorRepository {
       return new Error("There is already a color registered with this hexadecimal")
     }
 
-    if(!!colorUpdate == false){
-      return new Error("Color does not exists")
-    }
 
     colorUpdate.name = name ? name : colorUpdate.name
     colorUpdate.description = description ? description : colorUpdate.description
