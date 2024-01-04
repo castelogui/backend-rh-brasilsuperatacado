@@ -75,6 +75,12 @@ describe("Color => get", () => {
 
     expect(colors.status).toBe(200);
     expect(Array.isArray(colors.body)).toBe(true);
+    colors.body.forEach((obj: any) => {
+      Object.keys(obj).forEach((key) => {
+        expect(obj).toHaveProperty(key);
+        expect(obj[key]).not.toBeNull();
+      });
+    });
   });
   it("should not return any color with id incorrect", async () => {
     const response = await supertest(app).get("/colors/123");

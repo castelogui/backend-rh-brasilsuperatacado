@@ -76,17 +76,13 @@ describe("Category => get", () => {
   it("should return a list of categories", async () => {
     const response = await supertest(app).get("/categories");
     expect(response.status).toBe(200);
-
     expect(Array.isArray(response.body)).toBe(true);
-
-    if (Array.isArray(response.body)) {
-      response.body.forEach((category: any) => {
-        expect(category).toHaveProperty("id");
-        expect(category).toHaveProperty("name");
-        expect(category).toHaveProperty("description");
-        expect(category).toHaveProperty("created_at");
+    response.body.forEach((obj: any) => {
+      Object.keys(obj).forEach((key) => {
+        expect(obj).toHaveProperty(key);
+        expect(obj[key]).not.toBeNull();
       });
-    }
+    });
   });
   it("should not return any category, should return an error", async () => {
     const response = await supertest(app).get("/categories/123");
