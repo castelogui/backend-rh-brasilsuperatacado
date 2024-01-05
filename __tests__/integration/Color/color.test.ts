@@ -60,6 +60,28 @@ describe("Color => create", () => {
       "There is already a color with this hexadecimal"
     );
   });
+  it("the name argument must not be missing when creating a new color", async () => {
+    const response = await supertest(app)
+      .post("/colors")
+      .send({ hexadecimal: "#fff" });
+
+    expect(response.status).toBe(400);
+    expect(response.body).toBe("Request missing arguments: name");
+  });
+  it("the hexadecimal argument must not be missing when creating a new color", async () => {
+    const response = await supertest(app)
+      .post("/colors")
+      .send({ name: "Cor teste" });
+
+    expect(response.status).toBe(400);
+    expect(response.body).toBe("Request missing arguments: hexadecimal");
+  });
+  it("empty arguments should not be sent when creating a new color", async () => {
+    const response = await supertest(app).post("/colors").send({});
+
+    expect(response.status).toBe(400);
+    expect(response.body).toBe("Request missing arguments: name");
+  });
 });
 describe("Color => get", () => {
   it("should return a color", async () => {
