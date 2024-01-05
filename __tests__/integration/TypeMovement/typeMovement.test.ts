@@ -65,7 +65,6 @@ describe("Type Movement => get", () => {
       `/typemovement/${typeMovement.body.id}`
     );
 
-    console.log(response.body);
     expect200(response);
   });
   it("should be get a list of the movements types", async () => {
