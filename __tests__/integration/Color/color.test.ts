@@ -149,6 +149,35 @@ describe("Color => update", () => {
     );
   });
 });
+describe("Color => delete", () => {
+  describe("delete with invalid id", () => {
+    it("a color should not be excluded when sending invalid id", async () => {
+      const response = await supertest(app).delete("/colors/invalid-id-123");
+
+      expect(response.status).toBe(400);
+      expect(response.body).toBe("Color does not exists");
+    });
+    it("a color should not be excluded when sending null id", async () => {
+      const response = await supertest(app).delete("/colors/");
+
+      expect(response.status).toBe(404);
+      expect(response.text).toContain(
+        "This route is invalid or does not exist"
+      );
+    });
+  });
+  describe("delete with id correct", () => {
+    it("a color must be deleted if the ID is correct", async () => {
+      const color = await supertest(app)
+        .post("/colors")
+        .send({ name: "Branco branco", hexadecimal: "#0f0f0f" });
+
+      const response = await supertest(app).delete(`/colors/${color.body.id}`);
+
+      expect(response.status).toBe(204);
+    });
+  });
+});
 afterAll(async () => {
   await mockAppDataSource.drop();
   await mockAppDataSource.destroy();
