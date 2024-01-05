@@ -7,7 +7,7 @@ import { MockAppDataSource } from "../../mocks/mockAppDataSource";
 
 const mockAppDataSource = new MockAppDataSource();
 
-function expect200(response: any){
+function expect200(response: any) {
   return Object.keys(response.body).forEach((key) => {
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty(key);
@@ -25,7 +25,7 @@ describe("Color => create", () => {
 
     let response = await supertest(app).post("/colors").send(color);
 
-    expect200(response)
+    expect200(response);
     expect(response.body.name).toEqual(color.name);
     expect(response.body.hexadecimal).toEqual(color.hexadecimal);
   });
@@ -34,7 +34,7 @@ describe("Color => create", () => {
 
     let response = await supertest(app).post("/colors").send(color);
 
-    expect200(response)
+    expect200(response);
     expect(response.body.id).toEqual(color.id);
     expect(response.body.name).toEqual(color.name);
     expect(response.body.hexadecimal).toEqual(color.hexadecimal);
@@ -68,7 +68,7 @@ describe("Color => get", () => {
 
     const response = await supertest(app).get(`/colors/${created.body.id}`);
 
-    expect200(response)
+    expect200(response);
   });
   it("should return a list colors", async () => {
     const colors = await supertest(app).get("/colors");
@@ -87,6 +87,44 @@ describe("Color => get", () => {
 
     expect(response.status).toBe(400);
     expect(response.text).toBe('"Color does not exists"');
+  });
+});
+describe("Color => update", () => {
+  it("should not update color if the id is incorrect", async () => {
+    const responseUpdate = await supertest(app).put("/colors/1234");
+
+    expect(responseUpdate.status).toBe(400);
+    expect(responseUpdate.text).toBe('"Color does not exists"');
+  });
+  it("should not update color with an already exists name", async () => {
+    const color = new ColorMock().color_5();
+    await supertest(app).post("/colors").send(color);
+
+    const responseUpdate = await supertest(app)
+      .put(`/colors/${color.id}`)
+      .send({
+        name: "Azul",
+      });
+
+    expect(responseUpdate.status).toBe(400);
+    expect(responseUpdate.body).toBe(
+      "There is already a color registered with this name"
+    );
+  });
+  it("should not update color with an already exists hexadecimal", async () => {
+    const created = await supertest(app)
+      .post("/colors")
+      .send({ name: "Branco", hexadecimal: "#fff" });
+
+    const responseUpdate = await supertest(app)
+      .put(`/colors/${created.body.id}`)
+      .send({
+        hexadecimal: "#00f",
+      });
+    expect(responseUpdate.status).toBe(400);
+    expect(responseUpdate.body).toBe(
+      "There is already a color registered with this hexadecimal"
+    );
   });
 });
 afterAll(async () => {
