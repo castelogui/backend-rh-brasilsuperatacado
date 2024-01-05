@@ -2,7 +2,7 @@ import express, { Application, NextFunction, Request, Response } from "express";
 import { routes } from "./routes";
 require("dotenv").config();
 
-const app:Application = express();
+const app: Application = express();
 app.use(express.json());
 // Como utilizar uma rota padrão
 // app.use("/api", routes);
@@ -21,5 +21,8 @@ app.use(
     });
   }
 );
+app.use((req, res) => {
+  return res.status(404).send("This route is invalid or does not exist");
+});
 
 export { app };
