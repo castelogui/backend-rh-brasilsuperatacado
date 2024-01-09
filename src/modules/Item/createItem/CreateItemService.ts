@@ -32,7 +32,6 @@ export class CreateItemService {
       await this.validRequest({ name, category_id, color_id, size });
     } catch (error) {
       if (error instanceof Error) {
-        console.error(error);
         return new Error(error.message);
       }
     }
