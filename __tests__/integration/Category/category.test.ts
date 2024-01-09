@@ -156,6 +156,29 @@ describe("Category => delete", () => {
 
     expect(responseDelete.status).toBe(204);
   });
+  it("should not delete a category if has linked items", async () => {
+    const color = await supertest(app)
+      .post("/colors")
+      .send({ name: "Azul", hexadecimal: "#00f" });
+    const category = await supertest(app)
+      .post("/categories")
+      .send({ name: "Categoria para testar que não pode ser deletada" });
+    const item = await supertest(app).post("/items").send({
+      name: "Item teste",
+      category_id: category.body.id,
+      color_id: color.body.id,
+      size: "G",
+    });
+
+    const response = await supertest(app).delete(
+      `/categories/${category.body.id}`
+    );
+
+    expect(response.status).toBe(400);
+    expect(response.body).toBe(
+      "This category has linked items and cannot be deleted"
+    );
+  });
 });
 afterAll(async () => {
   await mockAppDataSource.drop();
