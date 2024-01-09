@@ -140,6 +140,26 @@ describe("Item => get", () => {
     });
   });
 });
+describe("Item => update", () => {
+  it("should not update item if the id is incorrect", async () => {
+    const response = await supertest(app)
+      .put("/items/123")
+      .send({ name: "Bermuda" });
+
+    expect(response.status).toBe(400);
+    expect(response.body).toContain("Item does not exists or id is incorrect");
+  });
+  it("should not update the item if there is already an item with the specified name and size", async () => {
+    const item = await supertest(app)
+      .post("/items")
+      .send({ name: "Bermuda", category_id: "1", color_id: "1", size: "35" });
+
+    const response = await supertest(app)
+      .put(`/items/${item.body.id}`)
+      .send({ name: "Calça", category_id: "1", color_id: "1" });
+    console.log(response.body);
+  });
+});
 afterAll(async () => {
   await mockAppDataSource.drop();
   await mockAppDataSource.destroy();
