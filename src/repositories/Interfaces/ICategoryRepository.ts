@@ -7,4 +7,5 @@ export interface ICategoryRepository {
   getAll(): Promise<Category[]>;
   delete(id: string): Promise<boolean | void>;
   update({ id, name, description }): Promise<Category | Error>;
+  existsItem(id: string): Promise<boolean>
 }
