@@ -19,11 +19,14 @@ export class UpdateItemService {
     color_id,
     size,
   }): Promise<Item | Error> {
+    const itemExists = await this.itemRepository.getOne(id);
+    if (itemExists instanceof Error) {
+      return new Error(`${itemExists.message} or id is incorrect`);
+    }
     try {
       await this.validRequest({ name, category_id, color_id, size });
     } catch (error) {
       if (error instanceof Error) {
-        console.error(error);
         return new Error(error.message);
       }
     }
