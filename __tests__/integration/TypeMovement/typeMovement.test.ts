@@ -77,6 +77,75 @@ describe("Type Movement => get", () => {
       });
     });
   });
+  it("should not return a movement type if id is incorrect", async () => {
+    const response = await supertest(app).get("/typemovement/123");
+
+    expect(response.status).toBe(400);
+    expect(response.body).toBe("Type movement does not exists");
+  });
+});
+describe("Type Movement => update", () => {
+  it("should not update the movement type if id is incorrect", async () => {
+    const response = await supertest(app)
+      .put("/typemovement/123")
+      .send({ code: "3", type: "teste", description: "teste" });
+
+    expect(response.status).toBe(400);
+    expect(response.text).toBe('"Type Movement does not exists"');
+  });
+  it("should not update the movement type with an already existing code", async () => {
+    const typeMovement = await supertest(app)
+      .post("/typemovement")
+      .send({ code: "3", type: "teste", description: "teste" });
+
+    const response = await supertest(app)
+      .put(`/typemovement/${typeMovement.body.id}`)
+      .send({ code: "1" });
+
+    expect(response.status).toBe(400);
+    expect(response.body).toBe("Already exists type movement with code");
+  });
+  it("should not update the movement type with an already existing type", async () => {
+    const typeMovement = await supertest(app)
+      .post("/typemovement")
+      .send({ code: "4", type: "teste2", description: "teste" });
+
+    const response = await supertest(app)
+      .put(`/typemovement/${typeMovement.body.id}`)
+      .send({ type: "Saida" });
+
+    expect(response.status).toBe(400);
+    expect(response.body).toBe("Already exists type movement with name");
+  });
+  it("should update the movement type", async () => {
+    const typeMovement = await supertest(app)
+      .post("/typemovement")
+      .send({ code: "5", type: "teste3", description: "teste" });
+    const response = await supertest(app)
+      .put(`/typemovement/${typeMovement.body.id}`)
+      .send({ type: "devolução" });
+
+    expect200(response);
+  });
+});
+describe("Type Movement => delete", () => {
+  it("shouldn't delete a type movement with the incorrect id", async () => {
+    const response = await supertest(app).delete("/typemovement/123");
+
+    expect(response.status).toBe(400);
+    expect(response.body).toBe("Movement Type does not exists");
+  });
+  it("should delete a movement type", async () => {
+    const typeMovement = await supertest(app)
+      .post("/typemovement")
+      .send({ code: "6", type: "Type delete" });
+
+    const response = await supertest(app).delete(
+      `/typemovement/${typeMovement.body.id}`
+    );
+
+    expect(response.status).toBe(204);
+  });
 });
 afterAll(async () => {
   await mockAppDataSource.drop();
