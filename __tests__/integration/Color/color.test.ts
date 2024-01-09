@@ -176,6 +176,27 @@ describe("Color => delete", () => {
 
       expect(response.status).toBe(204);
     });
+    it("should not delete a color if has linked items", async () => {
+      const color = await supertest(app)
+        .post("/colors")
+        .send({ name: "Cor teste para deletar", hexadecimal: "#cortesteparadeletar" });
+      const category = await supertest(app)
+        .post("/categories")
+        .send({ name: "Categoria teste" });
+      const item = await supertest(app).post("/items").send({
+        name: "Item teste",
+        category_id: category.body.id,
+        color_id: color.body.id,
+        size: "G",
+      });
+
+      const response = await supertest(app).delete(`/colors/${color.body.id}`);
+
+      expect(response.status).toBe(400);
+      expect(response.body).toBe(
+        "This color has linked items and cannot be deleted"
+      );
+    });
   });
 });
 afterAll(async () => {
