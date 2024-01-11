@@ -93,10 +93,22 @@ describe("Category => get", () => {
 });
 describe("Category => update", () => {
   it("should not update the category if the id is incorrect", async () => {
-    const responseUpdate = await supertest(app).put("/categories/123456");
+    const responseUpdate = await supertest(app)
+      .put("/categories/123456")
+      .send({ name: "teste" });
 
     expect(responseUpdate.status).toBe(400);
     expect(responseUpdate.text).toBe('"Category does not exists"');
+  });
+  it("should not update the category if name is null", async () => {
+    const category = await supertest(app).post("/categories").send({
+      name: "nome para ser apagado",
+    });
+    const response = await supertest(app)
+      .put(`/categories/${category.body.id}`)
+      .send({ name: "" });
+    expect(response.status).toBe(400);
+    expect(response.body).toBe("Request missing arguments: name");
   });
   it("should not update the category with an already existing name", async () => {
     const category = new CategoryMock().category_5();
