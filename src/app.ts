@@ -1,9 +1,13 @@
 import express, { Application, NextFunction, Request, Response } from "express";
 import { routes } from "./routes";
+import cors from "cors";
+import compression from "compression";
 require("dotenv").config();
 
 const app: Application = express();
 app.use(express.json());
+app.use(cors())
+app.use(compression())
 // Como utilizar uma rota padrão
 // app.use("/api", routes);
 app.use(routes);
