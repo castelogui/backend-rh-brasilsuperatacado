@@ -14,7 +14,8 @@
     "test:category": "jest --detectOpenHandles ./__tests__/integration/Category",
     "test:color": "jest --detectOpenHandles ./__tests__/integration/Color",
     "test:typeMovement": "jest --detectOpenHandles ./__tests__/integration/TypeMovement",
-    "test:item": "jest --detectOpenHandles ./__tests__/integration/Item"
+    "test:item": "jest --detectOpenHandles ./__tests__/integration/Item",
+    "test:movement": "jest --detectOpenHandles ./__tests__/integration/Movement"
   },
   "keywords": [],
   "author": "",
