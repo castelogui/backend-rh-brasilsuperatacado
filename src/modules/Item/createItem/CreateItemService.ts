@@ -53,10 +53,10 @@ export class CreateItemService {
       return new Error(colorExists.message);
     }
 
-    const itemAreadyExists = await this.itemRepository.exists({ name, size });
+    const itemAreadyExists = await this.itemRepository.exists({ name, size, category_id, color_id });
 
     if (itemAreadyExists) {
-      return new Error("An item with this name and size already exists");
+      return new Error("An item with this name, size, category and color already exists");
     }
 
     const item = await this.itemRepository.create({
