@@ -1,6 +1,4 @@
 import supertest from "supertest";
-import { AppDataSource } from "../../../src/database/AppDataSource";
-import { Item } from "../../../src/entities/Item";
 import { MockAppDataSource } from "../../mocks/mockAppDataSource";
 import { app } from "../../../src/app";
 
@@ -42,7 +40,7 @@ describe("Item => create", () => {
 
     expect(response.status).toBe(400);
     expect(response.body).toBe(
-      "An item with this name and size already exists"
+      "An item with this name, size, category and color already exists"
     );
   });
   it("a new item should not be created if the category ID does not exist", async () => {
@@ -157,7 +155,6 @@ describe("Item => update", () => {
     const response = await supertest(app)
       .put(`/items/${item.body.id}`)
       .send({ name: "Calça", category_id: "1", color_id: "1" });
-    console.log(response.body);
   });
 });
 afterAll(async () => {
