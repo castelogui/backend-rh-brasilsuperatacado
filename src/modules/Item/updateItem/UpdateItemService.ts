@@ -43,7 +43,7 @@ export class UpdateItemService {
       return new Error(colorExists.message);
     }
 
-    const itemAlreadyExists = await this.itemRepository.exists({ name, size });
+    const itemAlreadyExists = await this.itemRepository.exists({ name, size, category_id, color_id });
     if (itemAlreadyExists) {
       return new Error("This item already exists");
     }
