@@ -68,6 +68,7 @@ export class ItemRepository implements IItemRepository {
   }
 
   async create({
+    id,
     name,
     description,
     estoque,
@@ -77,6 +78,7 @@ export class ItemRepository implements IItemRepository {
     size,
   }: Item): Promise<Item | Error> {
     const item = repository.create({
+      id,
       name,
       description,
       estoque,

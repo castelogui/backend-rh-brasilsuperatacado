@@ -3,7 +3,7 @@ import { ITypeMovementRepository } from "../../../repositories/Interfaces/ITypeM
 
 export class CreateTypeMovementService {
   constructor(private typeMovementRepository: ITypeMovementRepository) {}
-  async execute({ code, type, description }): Promise<TypeMovement | Error> {
+  async execute({ id ,code, type, description }): Promise<TypeMovement | Error> {
     if (!code) {
       return new Error("Request missing arguments: code");
     }
@@ -26,6 +26,7 @@ export class CreateTypeMovementService {
       description = String(type).toLowerCase();
     }
     const typeMovement = await this.typeMovementRepository.create({
+      id,
       code,
       type,
       description,

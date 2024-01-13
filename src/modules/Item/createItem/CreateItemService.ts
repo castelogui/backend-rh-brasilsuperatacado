@@ -4,6 +4,7 @@ import { IColorRepository } from "../../../repositories/Interfaces/IColorReposit
 import { IItemRepository } from "../../../repositories/Interfaces/IItemRepository";
 
 type ItemRequest = {
+  id: String;
   name: String;
   description: String;
   estoque: number;
@@ -20,6 +21,7 @@ export class CreateItemService {
     private colorRepository: IColorRepository
   ) {}
   async execute({
+    id,
     name,
     description,
     estoque,
@@ -60,6 +62,7 @@ export class CreateItemService {
     }
 
     const item = await this.itemRepository.create({
+      id,
       name,
       description,
       estoque,

@@ -6,11 +6,12 @@ const repository = AppDataSource.getRepository(TypeMovement);
 
 export class TypeMovementRepository implements ITypeMovementRepository {
   async create({
+    id,
     code,
     type,
     description,
   }: TypeMovement): Promise<TypeMovement | Error> {
-    const typeMovement = repository.create({ code, type, description });
+    const typeMovement = repository.create({ id ,code, type, description });
 
     await repository.save(typeMovement);
 

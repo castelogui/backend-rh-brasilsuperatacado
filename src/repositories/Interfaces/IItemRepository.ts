@@ -2,6 +2,7 @@ import { Item } from "../../entities/Item";
 
 export interface IItemRepository {
   create({
+    id,
     name,
     description,
     estoque,
