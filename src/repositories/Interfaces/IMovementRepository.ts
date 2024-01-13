@@ -6,7 +6,8 @@ export interface IMovementRepository {
     quantity,
     type_movement_id,
     item_id,
-    item_estoque
+    item_estoque,
+    item_estoque_ant
   }): Promise<Movement | Error>;
   exists(name: string): Promise<boolean>;
   getOne(id: string): Promise<Movement | Error>;

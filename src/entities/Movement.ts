@@ -30,6 +30,8 @@ export class Movement {
   item: Item;
   @Column()
   item_estoque: number
+  @Column()
+  item_estoque_ant: number
   @CreateDateColumn()
   created_at: Date;
   @CreateDateColumn()
