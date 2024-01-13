@@ -1,56 +1,76 @@
-{
-  "categories": [
-    {
-      "id": "1",
-      "name": "Camisas",
-      "description": "camisas"
-    },
-    {
-      "id": "2",
-      "name": "Calças",
-      "description": "calças"
-    }
-  ],
-  "colors": [
-    {
-      "id": "1",
-      "name": "Branca",
-      "hexadecimal": "#fff"
-    },
-    {
-      "id": "2",
-      "name": "Azul",
-      "hexadecimal": "#00f"
-    }
-  ],
-  "items": [
-    {
-      "id": "1",
-      "name": "Uniforme Adm",
-      "category_id": "1",
-      "color_id": "1",
-      "size": "M"
-    },
-    {
-      "id": "2",
-      "name": "Uniforme Adm",
-      "category_id": "1",
-      "color_id": "2",
-      "size": "M"
-    },
-    {
-      "id": "3",
-      "name": "Uniforme Piso",
-      "category_id": "1",
-      "color_id": "2",
-      "size": "M"
-    },
-    {
-      "id": "4",
-      "name": "Calça depósito",
-      "category_id": "2",
-      "color_id": "2",
-      "size": "40"
-    }
-  ]
-}
+[
+  {
+    "categories": [
+      {
+        "id": "1",
+        "name": "Camisas",
+        "description": "camisas"
+      },
+      {
+        "id": "2",
+        "name": "Calças",
+        "description": "calças"
+      }
+    ]
+  },
+  {
+    "colors": [
+      {
+        "id": "1",
+        "name": "Branca",
+        "hexadecimal": "#fff"
+      },
+      {
+        "id": "2",
+        "name": "Azul",
+        "hexadecimal": "#00f"
+      }
+    ]
+  },
+  {
+    "items": [
+      {
+        "id": "1",
+        "name": "Uniforme Adm",
+        "category_id": "1",
+        "color_id": "1",
+        "size": "M"
+      },
+      {
+        "id": "2",
+        "name": "Uniforme Adm",
+        "category_id": "1",
+        "color_id": "2",
+        "size": "M"
+      },
+      {
+        "id": "3",
+        "name": "Uniforme Piso",
+        "category_id": "1",
+        "color_id": "2",
+        "size": "M"
+      },
+      {
+        "id": "4",
+        "name": "Calça depósito",
+        "category_id": "2",
+        "color_id": "2",
+        "size": "40"
+      }
+    ]
+  },
+  {
+    "typemovement": [
+      {
+        "id": "1",
+        "type": "Entrada",
+        "code": "1"
+      },
+      {
+        "id": "2",
+        "type": "Saida",
+        "code": "2"
+      }
+    ]
+  }
+]
