@@ -27,17 +27,18 @@ export class CreateMovementService {
     if (quantity == 0) {
       return new Error("Quantity cannot be zero");
     }
-    await this.validRequest({
-      description,
-      quantity,
-      type_movement_id,
-      item_id,
-    }).catch((error) => {
-      if (error instanceof Error) {
-        return new Error(error.message);
-      }
-    });
-
+    if (!description) {
+      return new Error("Request missing arguments: description");
+    }
+    if (!quantity) {
+      return new Error("Request missing arguments: quantity");
+    }
+    if (!type_movement_id) {
+      return new Error("Request missing arguments: type_movement_id");
+    }
+    if (!item_id) {
+      return new Error("Request missing arguments: item_id");
+    }
     const item = await this.itemRepository.getOne(item_id);
     if (item instanceof Error) {
       return new Error(item.message);
@@ -77,29 +78,5 @@ export class CreateMovementService {
     });
 
     return movement;
-  }
-  async validRequest({
-    description,
-    quantity,
-    type_movement_id,
-    item_id,
-  }): Promise<Error | void> {
-    return new Promise((resolve, reject) => {
-      const checkArgument = (arg, argName) => {
-        if (!arg) {
-          reject(new Error(`Request missing arguments: ${argName}`));
-        }
-      };
-
-      try {
-        checkArgument(description, "description");
-        checkArgument(quantity, "quantity");
-        checkArgument(type_movement_id, "type_movement_id");
-        checkArgument(item_id, "item_id");
-        resolve();
-      } catch (error) {
-        reject(error);
-      }
-    });
   }
 }
