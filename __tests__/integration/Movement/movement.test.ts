@@ -46,7 +46,7 @@ beforeAll(async () => {
   await presetData("mock.json");
 });
 describe("Movement => create", () => {
-  it("should be create a movement entrada => success", async () => {
+  it("should be to create a movement input", async () => {
     const response = await supertest(app).post("/movements").send({
       description: "Entrada de uniformes",
       quantity: 5,
@@ -59,6 +59,26 @@ describe("Movement => create", () => {
     expect200(response);
     expect200(item);
     expectEstoque(response, item);
+  });
+  it("A movement entry must not be created if the quantity is zero", async () => {
+    const response = await supertest(app).post("/movements").send({
+      description: "Entrada de uniformes 1",
+      quantity: 0,
+      type_movement_id: "1",
+      item_id: "1",
+    });
+
+    expect(response.status).toBe(400);
+    expect(response.body).toBe("Quantity cannot be zero");
+  });
+  it("should be to create a movement out", async () => {
+    const response = await supertest(app).post("/movements").send({
+      description: "Entrada de uniformes 1",
+      quantity: 10,
+      type_movement_id: "2",
+      item_id: "1",
+    });
+    expect200(response);
   });
 });
 afterAll(async () => {
