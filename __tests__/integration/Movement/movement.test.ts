@@ -19,35 +19,23 @@ function expectEstoque(response: any, item: any) {
 
 const mockAppDataSource = new MockAppDataSource();
 
-const presetData = async () => {
+const postData = async (key: string, data: Object) => {
+  await supertest(app)
+    .post(`/${key}`)
+    .send(data)
+    .then((response) => {
+      if (response.error) console.log("Created: ", key, response.body);
+    })
+    .catch((err) => console.log(err));
+};
+const presetData = async (mock: string) => {
   try {
-    const mockDataPath = path.join(__dirname, "mock.json");
+    const mockDataPath = path.join(__dirname, mock);
     const mockData = JSON.parse(await fs.readFile(mockDataPath, "utf-8"));
 
-    mockData.forEach(async (obj: Object) => {
-      Object.keys(obj).forEach((key) => {
-        obj[key].forEach(async (o) => {
-          await supertest(app)
-            .post(`/${key}`)
-            .send(o)
-            .then((response) => {
-              console.log("Created: ", key, response.body);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        });
-      });
-    });
-
-    //for (const category of mockData.categories) {
-    //  await supertest(app)
-    //    .post("/categories")
-    //    .send(category)
-    //    .catch((err) => {
-    //      console.log(err);
-    //    });
-    //}
+    for (const obj of mockData)
+      for (const [key, items] of Object.entries(obj))
+        if (Array.isArray(items)) for (const o of items) await postData(key, o);
   } catch (error) {
     console.error(`Erro ao carregar o arquivo JSON: ${error.message}`);
   }
@@ -55,7 +43,7 @@ const presetData = async () => {
 
 beforeAll(async () => {
   await mockAppDataSource.connect();
-  await presetData();
+  await presetData("mock.json");
 });
 describe("Movement => create", () => {
   it("should be create a movement entrada => success", async () => {
