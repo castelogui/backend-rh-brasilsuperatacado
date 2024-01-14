@@ -24,19 +24,20 @@ export class CreateMovementService {
     type_movement_id,
     item_id,
   }: MovementRequest): Promise<Movement | Error> {
-    try {
-      await this.validRequest({
-        description,
-        quantity,
-        type_movement_id,
-        item_id,
-      });
-    } catch (error) {
+    if (quantity == 0) {
+      return new Error("Quantity cannot be zero");
+    }
+    await this.validRequest({
+      description,
+      quantity,
+      type_movement_id,
+      item_id,
+    }).catch((error) => {
       if (error instanceof Error) {
-        console.error(error);
         return new Error(error.message);
       }
-    }
+    });
+
     const item = await this.itemRepository.getOne(item_id);
     if (item instanceof Error) {
       return new Error(item.message);

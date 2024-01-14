@@ -11,7 +11,7 @@ export class MovementRepository implements IMovementRepository {
     type_movement_id,
     item_id,
     item_estoque,
-    item_estoque_ant
+    item_estoque_ant,
   }: Movement): Promise<Movement | Error> {
     const movement = repository.create({
       description,
@@ -19,7 +19,7 @@ export class MovementRepository implements IMovementRepository {
       type_movement_id,
       item_id,
       item_estoque,
-      item_estoque_ant
+      item_estoque_ant,
     });
 
     await repository.save(movement);
