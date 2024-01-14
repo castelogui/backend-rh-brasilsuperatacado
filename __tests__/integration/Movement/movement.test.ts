@@ -73,12 +73,42 @@ describe("Movement => create", () => {
   });
   it("should be to create a movement out", async () => {
     const response = await supertest(app).post("/movements").send({
-      description: "Entrada de uniformes 1",
+      description: "Saida de uniformes",
       quantity: 10,
       type_movement_id: "2",
       item_id: "1",
     });
     expect200(response);
+  });
+  it("shouldn't be creating a movement if there's a lack of arguments", async () => {
+    const response1 = await supertest(app).post("/movements").send({
+      quantity: 10,
+      type_movement_id: "2",
+      item_id: "1",
+    });
+    const response2 = await supertest(app).post("/movements").send({
+      description: "Movimento",
+      type_movement_id: "2",
+      item_id: "1",
+    });
+    const response3 = await supertest(app).post("/movements").send({
+      description: "Movimento",
+      quantity: 10,
+      item_id: "1",
+    });
+    const response4 = await supertest(app).post("/movements").send({
+      description: "Movimento",
+      quantity: 10,
+      type_movement_id: "2",
+    });
+    expect(response1.status).toBe(400);
+    expect(response1.body).toBe("Request missing arguments: description");
+    expect(response2.status).toBe(400);
+    expect(response2.body).toBe("Request missing arguments: quantity");
+    expect(response3.status).toBe(400);
+    expect(response3.body).toBe("Request missing arguments: type_movement_id");
+    expect(response4.status).toBe(400);
+    expect(response4.body).toBe("Request missing arguments: item_id");
   });
 });
 afterAll(async () => {
