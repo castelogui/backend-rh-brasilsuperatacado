@@ -12,9 +12,14 @@ function expect200(response: any) {
   });
 }
 function expectEstoque(response: any, item: any) {
-  return expect(item.body.estoque).toBe(
-    response.body.quantity + response.body.item_estoque_ant
-  );
+  let value = 0;
+
+  if (response.body.type_movement_id == "1") {
+    value = response.body.quantity + response.body.item_estoque_ant;
+  } else if (response.body.type_movement_id == "2") {
+    value = response.body.quantity - response.body.item_estoque_ant;
+  }
+  return expect(item.body.estoque).toBe(value);
 }
 
 const mockAppDataSource = new MockAppDataSource();
@@ -109,6 +114,35 @@ describe("Movement => create", () => {
     expect(response3.body).toBe("Request missing arguments: type_movement_id");
     expect(response4.status).toBe(400);
     expect(response4.body).toBe("Request missing arguments: item_id");
+  });
+});
+describe("Movement => get", () => {
+  it("should be caught a movement", async () => {
+    const movement = await supertest(app).post("/movements").send({
+      description: "Entrada de uniformes",
+      quantity: 20,
+      type_movement_id: "1",
+      item_id: "2",
+    });
+
+    const response = await supertest(app).get(`/movements/${movement.body.id}`);
+    expect200(response);
+  });
+  it("should be get a list of movements", async () => {
+    const response = await supertest(app).get("/movements");
+    expect(response.status).toBe(200);
+    expect(Array.isArray(response.body)).toBe(true);
+    response.body.forEach((obj: any) => {
+      Object.keys(obj).forEach((key) => {
+        expect(obj).toHaveProperty(key);
+        expect(obj[key]).not.toBeNull();
+      });
+    });
+  });
+  it("should be no movement if the id is incorrect", async () => {
+    const response = await supertest(app).get("/movements/1234");
+    expect(response.status).toBe(400);
+    expect(response.body).toBe("Movement does not exists");
   });
 });
 afterAll(async () => {
