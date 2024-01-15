@@ -14,7 +14,7 @@ export class CreateMovementController {
     });
 
     if (result instanceof Error) {
-      return new Error(`it was not possible to create the movement: ${result.message}`);
+      return res.status(400).json(result.message);
     }
 
     return res.json(result);
