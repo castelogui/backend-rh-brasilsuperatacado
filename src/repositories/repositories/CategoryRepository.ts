@@ -53,14 +53,19 @@ export class CategoryRepository implements ICategoryRepository {
 
   async update({ id, name, description }): Promise<Category | Error> {
     const category = await repository.findOneBy({ id });
-    const categoryAlreadyExists = await this.exists(name);
+    const categoryAlreadyExists = await repository.findOneBy({
+      name,
+    });
 
     if (!!category == false) {
       return new Error("Category does not exists");
     }
-
     if (categoryAlreadyExists) {
-      return new Error("There is already a category registered with this name");
+      if (categoryAlreadyExists.id != category.id) {
+        return new Error(
+          "There is already a category registered with this name"
+        );
+      }
     }
 
     category.name = name ? name : category.name;
