@@ -45,7 +45,7 @@ export class CreateItemService {
     const categoryExists = await this.categoryRepository.getOne(
       category_id.toString()
     );
-    
+
     if (categoryExists instanceof Error) {
       return new Error(categoryExists.message);
     }
@@ -55,10 +55,18 @@ export class CreateItemService {
       return new Error(colorExists.message);
     }
 
-    const itemAreadyExists = await this.itemRepository.exists({ name, size, category_id, color_id });
+    const itemAreadyExists = await this.itemRepository.exists({
+      id,
+      name,
+      size,
+      category_id,
+      color_id,
+    });
 
     if (itemAreadyExists) {
-      return new Error("An item with this name, size, category and color already exists");
+      return new Error(
+        "An item with this name, size, category and color already exists"
+      );
     }
 
     const item = await this.itemRepository.create({

@@ -11,7 +11,19 @@ export interface IItemRepository {
     color_id,
     size,
   }): Promise<Item | Error>;
-  exists({ name, size, category_id, color_id }): Promise<boolean>;
+  exists({
+    id,
+    name,
+    size,
+    category_id,
+    color_id,
+  }: {
+    id: String | null;
+    name: String;
+    size: String;
+    category_id: String;
+    color_id: String;
+  }): Promise<boolean>;
   getOne(id: string): Promise<Item | Error>;
   getAll(): Promise<Item[]>;
   delete(id: string): Promise<boolean | void>;

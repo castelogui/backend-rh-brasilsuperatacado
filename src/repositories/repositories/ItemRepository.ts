@@ -61,9 +61,22 @@ export class ItemRepository implements IItemRepository {
 
     return returnItem;
   }
-  async exists({ name, size, category_id, color_id }: Item): Promise<boolean> {
-    const item = await repository.findOneBy({ name, size, category_id, color_id });
-
+  async exists({
+    id,
+    name,
+    size,
+    category_id,
+    color_id,
+  }: Item): Promise<boolean> {
+    const item = await repository.findOneBy({
+      name,
+      size,
+      category_id,
+      color_id,
+    });
+    if (id) {
+      return item.id !== id ? true : false;
+    }
     return !!item;
   }
 
