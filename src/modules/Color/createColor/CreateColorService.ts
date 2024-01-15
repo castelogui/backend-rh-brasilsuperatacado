@@ -2,6 +2,7 @@ import { Color } from "../../../entities/Color";
 import { IColorRepository } from "../../../repositories/Interfaces/IColorRepository";
 
 type ColorRequest = {
+  id: string;
   name: string;
   description: string;
   hexadecimal: string;
@@ -11,6 +12,7 @@ export class CreateColorService {
   constructor(private colorRepository: IColorRepository) {}
 
   async execute({
+    id,
     name,
     description,
     hexadecimal,
@@ -50,6 +52,7 @@ export class CreateColorService {
     }
 
     const color = this.colorRepository.create({
+      id,
       name,
       description,
       hexadecimal,

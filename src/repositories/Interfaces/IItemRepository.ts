@@ -2,6 +2,7 @@ import { Item } from "../../entities/Item";
 
 export interface IItemRepository {
   create({
+    id,
     name,
     description,
     estoque,
@@ -10,7 +11,7 @@ export interface IItemRepository {
     color_id,
     size,
   }): Promise<Item | Error>;
-  exists({ name, size }): Promise<boolean>;
+  exists({ name, size, category_id, color_id }): Promise<boolean>;
   getOne(id: string): Promise<Item | Error>;
   getAll(): Promise<Item[]>;
   delete(id: string): Promise<boolean | void>;

@@ -19,11 +19,14 @@ export class UpdateItemService {
     color_id,
     size,
   }): Promise<Item | Error> {
+    const itemExists = await this.itemRepository.getOne(id);
+    if (itemExists instanceof Error) {
+      return new Error(`${itemExists.message} or id is incorrect`);
+    }
     try {
       await this.validRequest({ name, category_id, color_id, size });
     } catch (error) {
       if (error instanceof Error) {
-        console.error(error);
         return new Error(error.message);
       }
     }
@@ -40,7 +43,7 @@ export class UpdateItemService {
       return new Error(colorExists.message);
     }
 
-    const itemAlreadyExists = await this.itemRepository.exists({ name, size });
+    const itemAlreadyExists = await this.itemRepository.exists({ name, size, category_id, color_id });
     if (itemAlreadyExists) {
       return new Error("This item already exists");
     }

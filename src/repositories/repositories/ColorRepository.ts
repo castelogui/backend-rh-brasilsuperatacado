@@ -1,17 +1,20 @@
 import { AppDataSource } from "../../database/AppDataSource";
 import { Color } from "../../entities/Color";
+import { Item } from "../../entities/Item";
 import { IColorRepository } from "../Interfaces/IColorRepository";
 
 const repository = AppDataSource.getRepository(Color);
+const itemRepository = AppDataSource.getRepository(Item);
 
 export class ColorRepository implements IColorRepository {
   async exists({ name, hexadecimal }): Promise<Boolean[]> {
     const result_name = await repository.findOneBy({ name });
     const result_hexadecimal = await repository.findOneBy({ hexadecimal });
-    return [ !!result_name, !!result_hexadecimal ];
+    return [!!result_name, !!result_hexadecimal];
   }
-  async create({ name, description, hexadecimal }: Color): Promise<Color> {
+  async create({ id, name, description, hexadecimal }: Color): Promise<Color> {
     const colorCreated = repository.create({
+      id,
       name,
       description,
       hexadecimal,
@@ -43,27 +46,44 @@ export class ColorRepository implements IColorRepository {
     return color;
   }
   async update({ id, name, description, hexadecimal }): Promise<Color | Error> {
-    const colorUpdate = await repository.findOneBy({id})
-    const colorAlreadyExists = await this.exists({name, hexadecimal})
+    const colorUpdate = await repository.findOneBy({ id });
 
-    if(colorAlreadyExists[0]){
-      return new Error("There is already a color registered with this name")
+    if (!!colorUpdate == false) {
+      return new Error("Color does not exists");
     }
 
-    if(colorAlreadyExists[1]){
-      return new Error("There is already a color registered with this hexadecimal")
+    if (name) {
+      const color_name = await repository.findOneBy({ name });
+
+      if (!!color_name && color_name.id != id) {
+        return new Error("There is already a color registered with this name");
+      }
+    }
+    if (hexadecimal) {
+      const color_hexadecimal = await repository.findOneBy({ hexadecimal });
+
+      if (!!color_hexadecimal && color_hexadecimal.id != id) {
+        return new Error(
+          "There is already a color registered with this hexadecimal"
+        );
+      }
     }
 
-    if(!!colorUpdate == false){
-      return new Error("Color does not exists")
-    }
+    colorUpdate.name = name ? name : colorUpdate.name;
+    colorUpdate.description = description
+      ? description
+      : colorUpdate.description;
+    colorUpdate.hexadecimal = hexadecimal
+      ? hexadecimal
+      : colorUpdate.hexadecimal;
 
-    colorUpdate.name = name ? name : colorUpdate.name
-    colorUpdate.description = description ? description : colorUpdate.description
-    colorUpdate.hexadecimal = hexadecimal ? hexadecimal : colorUpdate.hexadecimal
+    await repository.save(colorUpdate);
 
-    await repository.save(colorUpdate)
+    return colorUpdate;
+  }
+  async existsItem(id: string): Promise<boolean> {
+    const item = await itemRepository.findOne({ where: { color_id: id } });
 
-    return colorUpdate
+    return !!item;
   }
 }

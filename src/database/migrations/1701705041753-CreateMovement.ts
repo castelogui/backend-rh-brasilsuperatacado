@@ -32,6 +32,10 @@ export class CreateMovement1701705041753 implements MigrationInterface {
             type: "numeric",
           },
           {
+            name: "item_estoque_ant",
+            type: "numeric",
+          },
+          {
             name: "created_at",
             type: "timestamp",
             default: "now()",

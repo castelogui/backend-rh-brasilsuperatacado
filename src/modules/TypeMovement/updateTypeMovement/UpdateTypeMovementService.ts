@@ -23,8 +23,6 @@ export class UpdateTypeMovementService {
       description,
     });
 
-    console.log(typeMovement);
-
     if (typeMovement instanceof Error) {
       return new Error(typeMovement.message);
     }

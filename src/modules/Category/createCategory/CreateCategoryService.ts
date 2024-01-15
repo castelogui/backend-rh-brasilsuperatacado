@@ -2,6 +2,7 @@ import { Category } from "../../../entities/Category";
 import { ICategoryRepository } from "../../../repositories/Interfaces/ICategoryRepository";
 
 type CategoryRequest = {
+  id: string;
   name: string;
   description: string;
 };
@@ -10,13 +11,14 @@ export class CreateCategoryService {
   constructor(private categoryRepository: ICategoryRepository) {}
 
   async execute({
+    id,
     name,
     description,
   }: CategoryRequest): Promise<Category | Error> {
-    if(!name || name == undefined || name == "" || name == null){
-      return new Error("Request missing arguments: name")
+    if (!name || name == undefined || name == "" || name == null) {
+      return new Error("Request missing arguments: name");
     }
-    
+
     if (!description || description == undefined || description == "") {
       description = String(name).toLowerCase();
     }
@@ -28,6 +30,7 @@ export class CreateCategoryService {
     }
 
     const category = this.categoryRepository.create({
+      id,
       name,
       description,
     });

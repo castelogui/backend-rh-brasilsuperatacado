@@ -48,6 +48,7 @@ export class CreateMovementService {
       return new Error(typeMovement.message);
     }
     let item_estoque = 0;
+    let item_estoque_ant = item.estoque;
 
     if (typeMovement instanceof TypeMovement && item instanceof Item) {
       if (typeMovement.code == "1") {
@@ -71,6 +72,7 @@ export class CreateMovementService {
       type_movement_id,
       item_id,
       item_estoque,
+      item_estoque_ant,
     });
 
     return movement;

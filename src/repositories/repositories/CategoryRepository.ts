@@ -1,8 +1,10 @@
 import { AppDataSource } from "../../database/AppDataSource";
 import { Category } from "../../entities/Category";
+import { Item } from "../../entities/Item";
 import { ICategoryRepository } from "../Interfaces/ICategoryRepository";
 
 const repository = AppDataSource.getRepository(Category);
+const itemRepository = AppDataSource.getRepository(Item);
 
 export class CategoryRepository implements ICategoryRepository {
   async exists(name: string): Promise<boolean> {
@@ -11,8 +13,9 @@ export class CategoryRepository implements ICategoryRepository {
     });
     return !!category;
   }
-  async create({ name, description }): Promise<Category> {
+  async create({ id, name, description }): Promise<Category> {
     const category = repository.create({
+      id,
       name,
       description,
     });
@@ -50,14 +53,14 @@ export class CategoryRepository implements ICategoryRepository {
 
   async update({ id, name, description }): Promise<Category | Error> {
     const category = await repository.findOneBy({ id });
-    const categoryAlreadyExists = await this.exists(name)
-
-    if(categoryAlreadyExists){
-      return new Error("There is already a category registered with this name")
-    }
+    const categoryAlreadyExists = await this.exists(name);
 
     if (!!category == false) {
       return new Error("Category does not exists");
+    }
+
+    if (categoryAlreadyExists) {
+      return new Error("There is already a category registered with this name");
     }
 
     category.name = name ? name : category.name;
@@ -66,5 +69,10 @@ export class CategoryRepository implements ICategoryRepository {
     await repository.save(category);
 
     return category;
+  }
+  async existsItem(id: string): Promise<boolean> {
+    const item = await itemRepository.findOne({ where: { category_id: id } });
+
+    return !!item;
   }
 }

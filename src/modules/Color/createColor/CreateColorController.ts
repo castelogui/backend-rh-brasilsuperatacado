@@ -4,9 +4,10 @@ import { CreateColorService } from "./CreateColorService";
 export class CreateColorController {
   constructor(private createColor: CreateColorService) {}
   async handle(req: Request, res: Response) {
-    const { name, description, hexadecimal } = req.body;
+    const { id, name, description, hexadecimal } = req.body;
 
     const result = await this.createColor.execute({
+      id,
       name,
       description,
       hexadecimal,

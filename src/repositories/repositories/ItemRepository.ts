@@ -61,13 +61,14 @@ export class ItemRepository implements IItemRepository {
 
     return returnItem;
   }
-  async exists({ name, size }: Item): Promise<boolean> {
-    const item = await repository.findOneBy({ name, size });
+  async exists({ name, size, category_id, color_id }: Item): Promise<boolean> {
+    const item = await repository.findOneBy({ name, size, category_id, color_id });
 
     return !!item;
   }
 
   async create({
+    id,
     name,
     description,
     estoque,
@@ -77,6 +78,7 @@ export class ItemRepository implements IItemRepository {
     size,
   }: Item): Promise<Item | Error> {
     const item = repository.create({
+      id,
       name,
       description,
       estoque,
