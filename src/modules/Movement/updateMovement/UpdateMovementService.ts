@@ -2,6 +2,8 @@ import { Movement } from "../../../entities/Movement";
 import { IMovementRepository } from "../../../repositories/Interfaces/IMovementRepository";
 import { IItemRepository } from "../../../repositories/Interfaces/IItemRepository";
 import { ITypeMovementRepository } from "../../../repositories/Interfaces/ITypeMovementRepository";
+import { Item } from "../../../entities/Item";
+import { TypeMovement } from "../../../entities/TypeMovement";
 
 export class UpdateMovementService {
   constructor(
@@ -17,17 +19,20 @@ export class UpdateMovementService {
     type_movement_id,
     item_id,
   }): Promise<Movement | Error> {
-    try {
-      await this.validRequest({
-        description,
-        quantity,
-        type_movement_id,
-        item_id,
-      });
-    } catch (error) {
-      if (error instanceof Error) {
-        return new Error(error.message);
-      }
+    if (quantity == 0) {
+      return new Error("Quantity cannot be zero");
+    }
+    if (!description) {
+      return new Error("Request missing arguments: description");
+    }
+    if (!quantity) {
+      return new Error("Request missing arguments: quantity");
+    }
+    if (!type_movement_id) {
+      return new Error("Request missing arguments: type_movement_id");
+    }
+    if (!item_id) {
+      return new Error("Request missing arguments: item_id");
     }
     const item = await this.itemRepository.getOne(item_id);
     if (item instanceof Error) {
@@ -39,12 +44,32 @@ export class UpdateMovementService {
     if (typeMovement instanceof Error) {
       return new Error(typeMovement.message);
     }
+    let item_estoque = 0;
+    let item_estoque_ant = item.estoque;
+
+    if (typeMovement instanceof TypeMovement && item instanceof Item) {
+      if (typeMovement.code == "1") {
+        let result = await this.itemRepository.addEstoque(item_id, quantity);
+        item_estoque = (item instanceof Item ? item.estoque : 0) + quantity;
+        if (result instanceof Error) {
+          return new Error(result.message);
+        }
+      } else if (typeMovement.code == "2") {
+        let result = await this.itemRepository.removeEstoque(item_id, quantity);
+        item_estoque = (item instanceof Item ? item.estoque : 0) - quantity;
+        if (result instanceof Error) {
+          return new Error(result.message);
+        }
+      }
+    }
     const result = await this.movementRepository.update({
       id,
       description,
       quantity,
       type_movement_id,
       item_id,
+      item_estoque,
+      item_estoque_ant,
     });
 
     if (result instanceof Error) {
@@ -52,29 +77,5 @@ export class UpdateMovementService {
     }
 
     return result;
-  }
-  async validRequest({
-    description,
-    quantity,
-    type_movement_id,
-    item_id,
-  }): Promise<Error | void> {
-    return new Promise((resolve, reject) => {
-      const checkArgument = (arg, argName) => {
-        if (!arg) {
-          reject(new Error(`Request missing arguments: ${argName}`));
-        }
-      };
-
-      try {
-        checkArgument(description, "description");
-        checkArgument(quantity, "quantity");
-        checkArgument(type_movement_id, "type_movement_id");
-        checkArgument(item_id, "item_id");
-        resolve();
-      } catch (error) {
-        reject(error);
-      }
-    });
   }
 }

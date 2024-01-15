@@ -19,5 +19,7 @@ export interface IMovementRepository {
     quantity,
     type_movement_id,
     item_id,
+    item_estoque,
+    item_estoque_ant,
   }): Promise<Movement | Error>;
 }

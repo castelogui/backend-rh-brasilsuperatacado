@@ -65,6 +65,8 @@ export class MovementRepository implements IMovementRepository {
     quantity,
     type_movement_id,
     item_id,
+    item_estoque,
+    item_estoque_ant,
   }): Promise<Movement | Error> {
     const movement = await repository.findOneBy({ id });
 
@@ -79,6 +81,10 @@ export class MovementRepository implements IMovementRepository {
       : movement.type_movement_id;
     movement.item_id = item_id ? item_id : movement.item_id;
     movement.updated_at = new Date();
+    movement.item_estoque = item_estoque ? item_estoque : movement.item_estoque;
+    movement.item_estoque_ant = item_estoque_ant
+      ? item_estoque_ant
+      : movement.item_estoque_ant;
 
     await repository.save(movement);
 
