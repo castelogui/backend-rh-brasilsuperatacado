@@ -34,6 +34,18 @@ export class UpdateMovementService {
     if (!item_id) {
       return new Error("Request missing arguments: item_id");
     }
+
+    const movement = await this.movementRepository.getOne(id);
+    if (movement instanceof Movement) {
+      let rollback = await this.itemRepository.removeEstoque(
+        item_id,
+        movement.quantity
+      );
+      if (rollback instanceof Error) {
+        return new Error(rollback.message);
+      }
+    }
+
     const item = await this.itemRepository.getOne(item_id);
     if (item instanceof Error) {
       return new Error(item.message);
