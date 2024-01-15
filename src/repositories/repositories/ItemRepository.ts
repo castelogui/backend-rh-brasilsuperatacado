@@ -74,7 +74,7 @@ export class ItemRepository implements IItemRepository {
       category_id,
       color_id,
     });
-    if (id) {
+    if (item) {
       return item.id !== id ? true : false;
     }
     return !!item;
