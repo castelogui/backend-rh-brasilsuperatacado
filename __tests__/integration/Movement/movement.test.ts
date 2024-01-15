@@ -12,14 +12,16 @@ function expect200(response: any) {
   });
 }
 function expectEstoque(response: any, item: any) {
-  let value = 0;
-
   if (response.body.type_movement_id == "1") {
-    value = response.body.quantity + response.body.item_estoque_ant;
-  } else if (response.body.type_movement_id == "2") {
-    value = response.body.quantity - response.body.item_estoque_ant;
+    return expect(item.body.estoque).toBe(
+      response.body.quantity + response.body.item_estoque_ant
+    );
   }
-  return expect(item.body.estoque).toBe(value);
+  if (response.body.type_movement_id == "2") {
+    return expect(item.body.estoque).toBe(
+      response.body.quantity - response.body.item_estoque_ant
+    );
+  }
 }
 
 const mockAppDataSource = new MockAppDataSource();
@@ -143,6 +145,33 @@ describe("Movement => get", () => {
     const response = await supertest(app).get("/movements/1234");
     expect(response.status).toBe(400);
     expect(response.body).toBe("Movement does not exists");
+  });
+});
+describe("Movement => update", () => {
+  it("should be updated movement", async () => {
+    const movement = await supertest(app).post("/movements").send({
+      description: "Entrada de uniformes",
+      quantity: 5,
+      type_movement_id: "1",
+      item_id: "2",
+    });
+    console.log("Movement: ", movement.body);
+    const response = await supertest(app)
+      .put(`/movements/${movement.body.id}`)
+      .send({
+        description: "Entrada de uniformes",
+        quantity: 5,
+        type_movement_id: "2",
+        item_id: "2",
+      });
+    const item = await supertest(app).get(`/items/${response.body.item_id}`);
+
+    console.log("Response: ", response.body);
+    console.log("Item: ", item.body);
+
+    expect200(response);
+    expect200(item);
+    expectEstoque(response, item);
   });
 });
 afterAll(async () => {
