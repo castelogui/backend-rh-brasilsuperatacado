@@ -5,9 +5,6 @@ import { AppDataSource } from "../../../src/database/AppDataSource";
 import { CategoryMock } from "../../mocks/mockEntities";
 import { MockAppDataSource } from "../../mocks/mockAppDataSource";
 
-function parseResponse(response: any, type: string) {
-  return JSON.parse(response.text.substring(response.text.indexOf(type)));
-}
 function expect200(response: any) {
   return Object.keys(response.body).forEach((key) => {
     expect(response.status).toBe(200);
@@ -67,9 +64,8 @@ describe("Category => get", () => {
     const category = new CategoryMock().category_4();
 
     const created = await supertest(app).post("/categories").send(category);
-    const id = parseResponse(created, "{").id;
 
-    const response = await supertest(app).get(`/categories/${id}`);
+    const response = await supertest(app).get(`/categories/${created.body.id}`);
 
     expect200(response);
   });
@@ -129,24 +125,21 @@ describe("Category => update", () => {
   it("should update the category", async () => {
     const nameUpdate = "Name: Camisa Social Admin";
     const descriptionUpdate = "Description: Camisa Social Admin";
-    const category = categoryRepository.create({
-      name: "Calça Jeans",
-    });
+
     const responseCreate = await supertest(app)
       .post("/categories")
-      .send(category);
+      .send({ name: "Calça Jeans" });
 
-    const id = parseResponse(responseCreate, "{").id;
-
-    const responseUpdate = await supertest(app).put(`/categories/${id}`).send({
-      name: nameUpdate,
-      description: descriptionUpdate,
-    });
-    const categoryUpdate: Category = parseResponse(responseUpdate, "{");
+    const responseUpdate = await supertest(app)
+      .put(`/categories/${responseCreate.body.id}`)
+      .send({
+        name: nameUpdate,
+        description: descriptionUpdate,
+      });
 
     expect200(responseUpdate);
-    expect(categoryUpdate.name).toEqual(nameUpdate);
-    expect(categoryUpdate.description).toEqual(descriptionUpdate);
+    expect(responseUpdate.body.name).toEqual(nameUpdate);
+    expect(responseUpdate.body.description).toEqual(descriptionUpdate);
   });
 });
 describe("Category => delete", () => {
@@ -163,8 +156,10 @@ describe("Category => delete", () => {
     const responseCreate = await supertest(app)
       .post("/categories")
       .send(category);
-    const id = parseResponse(responseCreate, "{").id;
-    const responseDelete = await supertest(app).delete(`/categories/${id}`);
+
+    const responseDelete = await supertest(app).delete(
+      `/categories/${responseCreate.body.id}`
+    );
 
     expect(responseDelete.status).toBe(204);
   });
