@@ -46,6 +46,7 @@ export class MovementRepository implements IMovementRepository {
   async getAll(): Promise<Movement[]> {
     const movements = await repository.find({
       relations: ["type_movement", "item"],
+      order: { created_at: "DESC" },
     });
 
     return movements;
