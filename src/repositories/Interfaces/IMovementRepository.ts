@@ -12,6 +12,7 @@ export interface IMovementRepository {
   exists(name: string): Promise<boolean>;
   getOne(id: string): Promise<Movement | Error>;
   getAll(): Promise<Movement[]>;
+  getAllMovItem(item_id: string): Promise<Movement[]>;
   delete(id: string): Promise<boolean | void>;
   update({
     id,

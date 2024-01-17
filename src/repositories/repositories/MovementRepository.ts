@@ -92,4 +92,13 @@ export class MovementRepository implements IMovementRepository {
 
     return returnMovement;
   }
+  async getAllMovItem(item_id: string): Promise<Movement[]> {
+    const movements = await repository.find({
+      where: { item_id },
+      relations: ["type_movement", "item"],
+      order: { created_at: "ASC" },
+    });
+
+    return movements;
+  }
 }
