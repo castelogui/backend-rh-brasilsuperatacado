@@ -19,8 +19,8 @@ export class UpdateMovementService {
     type_movement_id,
     item_id,
   }): Promise<Movement | Error> {
-    if (quantity == 0) {
-      return new Error("Quantity cannot be zero");
+    if (quantity <= 0) {
+      return new Error("Quantity cannot be less than or equal to zero");
     }
     if (!description) {
       return new Error("Request missing arguments: description");
@@ -34,27 +34,42 @@ export class UpdateMovementService {
     if (!item_id) {
       return new Error("Request missing arguments: item_id");
     }
-
+    const typeMovement = await this.typeMovementRepository.getOne(
+      type_movement_id
+    );
+    if (typeMovement instanceof Error) {
+      return new Error(typeMovement.message);
+    }
     const movement = await this.movementRepository.getOne(id);
     if (movement instanceof Movement) {
-      let rollback = await this.itemRepository.removeEstoque(
-        item_id,
-        movement.quantity
-      );
-      if (rollback instanceof Error) {
-        return new Error(rollback.message);
+      if (type_movement_id !== movement.type_movement_id) {
+        return new Error("It is not possible to change the type of movement");
+      }
+      if (item_id !== movement.item_id) {
+        return new Error("It is not possible to change the item");
+      }
+      if (typeMovement.code == "1") {
+        let rollback = await this.itemRepository.removeEstoque(
+          item_id,
+          movement.quantity
+        );
+        if (rollback instanceof Error) {
+          return new Error(rollback.message);
+        }
+      } else if (typeMovement.code == "2") {
+        let rollback = await this.itemRepository.addEstoque(
+          item_id,
+          movement.quantity
+        );
+        if (rollback instanceof Error) {
+          return new Error(rollback.message);
+        }
       }
     }
 
     const item = await this.itemRepository.getOne(item_id);
     if (item instanceof Error) {
       return new Error(item.message);
-    }
-    const typeMovement = await this.typeMovementRepository.getOne(
-      type_movement_id
-    );
-    if (typeMovement instanceof Error) {
-      return new Error(typeMovement.message);
     }
     let item_estoque = 0;
     let item_estoque_ant = item.estoque;
