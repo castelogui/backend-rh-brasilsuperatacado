@@ -12,10 +12,20 @@ export class DeleteMovementService {
   async execute(id: string): Promise<boolean | Error> {
     const movement = await this.movementRepository.getOne(id);
 
-    // Realiza o rollback das movimentações dentro do Item
-    // se for entrada ele remove a quantidade do movimento 
-    // se for saida ele adiciona a quantidade do movimento
     if (movement instanceof Movement) {
+      const movements = await this.movementRepository.getAllMovItem(
+        movement.item_id
+      );
+      const lastMov = movements[movements.length - 1];
+
+      if (lastMov.id !== movement.id) {
+        return new Error("It is only possible to delete the last movement");
+      }
+
+      // Realiza o rollback das movimentações dentro do Item
+      // se for entrada ele remove a quantidade do movimento
+      // se for saida ele adiciona a quantidade do movimento
+
       const typeMovement = await this.typeMovementRepository.getOne(
         movement.type_movement_id
       );
