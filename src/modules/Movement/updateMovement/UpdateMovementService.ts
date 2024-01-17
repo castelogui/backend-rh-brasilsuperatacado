@@ -43,9 +43,17 @@ export class UpdateMovementService {
     const movement = await this.movementRepository.getOne(id);
 
     // Realiza o rollback das movimentações dentro do Item
-    // se for entrada ele remove a quantidade do movimento 
+    // se for entrada ele remove a quantidade do movimento
     // se for saida ele adiciona a quantidade do movimento
     if (movement instanceof Movement) {
+      const movements = await this.movementRepository.getAllMovItem(
+        movement.item_id
+      );
+      const lastMov = movements[movements.length - 1];
+
+      if (lastMov.id !== movement.id) {
+        return new Error("It is only possible to update the last movement");
+      }
       if (type_movement_id !== movement.type_movement_id) {
         return new Error("It is not possible to change the type of movement");
       }
