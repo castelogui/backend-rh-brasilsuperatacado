@@ -1,5 +1,6 @@
 import { AppDataSource } from "../../database/AppDataSource";
 import { Movement } from "../../entities/Movement";
+import { FormatCustomDate } from "../../utils/formatCustomDate";
 import { IMovementRepository } from "../Interfaces/IMovementRepository";
 
 const repository = AppDataSource.getRepository(Movement);
@@ -81,7 +82,7 @@ export class MovementRepository implements IMovementRepository {
       ? type_movement_id
       : movement.type_movement_id;
     movement.item_id = item_id ? item_id : movement.item_id;
-    movement.updated_at = new Date();
+    movement.updated_at = new Date(new FormatCustomDate().dateTimeLocal())
     movement.item_estoque = item_estoque ? item_estoque : movement.item_estoque;
     movement.item_estoque_ant = item_estoque_ant
       ? item_estoque_ant
