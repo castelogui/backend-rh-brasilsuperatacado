@@ -35,80 +35,24 @@ const postData = async (key: string, data: Object) => {
     })
     .catch((err) => console.log(err));
 };
-//const presetData = async (mock: string) => {
-//  try {
-//    const mockDataPath = path.join(__dirname, mock);
-//    const mockData = JSON.parse(await fs.readFile(mockDataPath, "utf-8"));
-//
-//    for (const obj of mockData)
-//      for (const [key, items] of Object.entries(obj))
-//        if (Array.isArray(items)) for (const o of items) await postData(key, o);
-//  } catch (error) {
-//    console.error(`Erro ao carregar o arquivo JSON: ${error.message}`);
-//  }
-//};
+const presetData = async (mock: string) => {
+  try {
+    const mockDataPath = path.join(__dirname, mock);
+    const mockData = JSON.parse(await fs.readFile(mockDataPath, "utf-8"));
+
+    for (const obj of mockData)
+      for (const [key, items] of Object.entries(obj))
+        if (Array.isArray(items)) for (const o of items) await postData(key, o);
+  } catch (error) {
+    console.error(`Erro ao carregar o arquivo JSON: ${error.message}`);
+  }
+};
 
 beforeAll(async () => {
   await mockAppDataSource.connect();
-  //await presetData("mock.json");
-  await postData("categories", {
-    id: "1",
-    name: "Camisas",
-    description: "camisas",
-  });
-  await postData("categories", {
-    id: "2",
-    name: "Calças",
-    description: "calças",
-  });
-  await postData("colors", {
-    id: "1",
-    name: "Branca",
-    hexadecimal: "#fff",
-  });
-  await postData("colors", {
-    id: "2",
-    name: "Azul",
-    hexadecimal: "#00f",
-  });
-  await postData("items", {
-    id: "1",
-    name: "Uniforme Adm",
-    category_id: "1",
-    color_id: "1",
-    size: "M",
-  });
-  await postData("items", {
-    id: "2",
-    name: "Uniforme Adm",
-    category_id: "1",
-    color_id: "2",
-    size: "M",
-  });
-  await postData("items", {
-    id: "3",
-    name: "Uniforme Piso",
-    category_id: "1",
-    color_id: "2",
-    size: "M",
-  });
-  await postData("items", {
-    id: "4",
-    name: "Calça depósito",
-    category_id: "2",
-    color_id: "2",
-    size: "40",
-  });
-  await postData("typemovement", {
-    id: "1",
-    type: "Entrada",
-    code: "1",
-  });
-  await postData("typemovement", {
-    id: "2",
-    type: "Saida",
-    code: "2",
-  });
+
+  await presetData("mock.json");
+
 });
 describe("Movement => create", () => {
   it("should be to create a movement input", async () => {
@@ -217,18 +161,15 @@ describe("Movement => update", () => {
       .put(`/movements/${movement.body.id}`)
       .send({
         description: "Entrada de uniformes",
-        quantity: 5,
-        type_movement_id: "2",
+        quantity: 1,
+        type_movement_id: "1",
         item_id: "2",
       });
-    const item = await supertest(app).get(`/items/${response.body.item_id}`);
+    const item = await supertest(app).get(`/items/2`);
 
-    //console.log("Response: ", response.body);
-    //console.log("Item: ", item.body);
-
-    //expect200(response);
-   // expect200(item);
-    //expectEstoque(response, item);
+    expect200(response);
+    expect200(item);
+    expectEstoque(response, item);
   });
 });
 afterAll(async () => {
