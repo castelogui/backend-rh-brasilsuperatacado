@@ -9,6 +9,7 @@ import {
 import { v4 as uuid } from "uuid";
 import { Category } from "./Category";
 import { Color } from "./Color";
+import { FormatCustomDate } from "../utils/formatCustomDate";
 
 @Entity("items")
 export class Item {
@@ -52,7 +53,7 @@ export class Item {
       this.id = uuid();
     }
     if (!this.created_at || this.created_at == undefined) {
-      this.created_at = new Date();
+      this.created_at = new Date(new FormatCustomDate().dateTimeLocal())
     }
   }
 }

@@ -9,6 +9,7 @@ import {
 import { v4 as uuid } from "uuid";
 import { TypeMovement } from "./TypeMovement";
 import { Item } from "./Item";
+import { FormatCustomDate } from "../utils/formatCustomDate";
 
 @Entity("movement")
 export class Movement {
@@ -43,7 +44,7 @@ export class Movement {
       this.id = uuid();
     }
     if (!this.created_at || this.created_at == undefined) {
-      this.created_at = new Date();
+      this.created_at = new Date(new FormatCustomDate().dateTimeLocal())
     }
   }
 }
