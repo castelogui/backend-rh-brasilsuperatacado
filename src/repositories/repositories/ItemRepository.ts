@@ -1,5 +1,6 @@
 import { AppDataSource } from "../../database/AppDataSource";
 import { Item } from "../../entities/Item";
+import { FormatCustomDate } from "../../utils/formatCustomDate";
 import { IItemRepository } from "../Interfaces/IItemRepository";
 
 const repository = AppDataSource.getRepository(Item);
@@ -54,6 +55,7 @@ export class ItemRepository implements IItemRepository {
     item.category_id = category_id ? category_id : item.category_id;
     item.color_id = color_id ? color_id : item.color_id;
     item.size = size ? size : item.size;
+    item.updated_at = new Date(new FormatCustomDate().dateTimeLocal())
 
     await repository.save(item);
 

@@ -1,5 +1,6 @@
 import { AppDataSource } from "../../database/AppDataSource";
 import { TypeMovement } from "../../entities/TypeMovement";
+import { FormatCustomDate } from "../../utils/formatCustomDate";
 import { ITypeMovementRepository } from "../Interfaces/ITypeMovementRepository";
 
 const repository = AppDataSource.getRepository(TypeMovement);
@@ -11,7 +12,7 @@ export class TypeMovementRepository implements ITypeMovementRepository {
     type,
     description,
   }: TypeMovement): Promise<TypeMovement | Error> {
-    const typeMovement = repository.create({ id ,code, type, description });
+    const typeMovement = repository.create({ id, code, type, description });
 
     await repository.save(typeMovement);
 
@@ -78,6 +79,7 @@ export class TypeMovementRepository implements ITypeMovementRepository {
     typeMovement.description = description
       ? description
       : typeMovement.description;
+    typeMovement.updated_at = new Date(new FormatCustomDate().dateTimeLocal());
 
     await repository.save(typeMovement);
 

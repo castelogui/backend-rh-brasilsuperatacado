@@ -1,6 +1,7 @@
 import { AppDataSource } from "../../database/AppDataSource";
 import { Category } from "../../entities/Category";
 import { Item } from "../../entities/Item";
+import { FormatCustomDate } from "../../utils/formatCustomDate";
 import { ICategoryRepository } from "../Interfaces/ICategoryRepository";
 
 const repository = AppDataSource.getRepository(Category);
@@ -70,6 +71,7 @@ export class CategoryRepository implements ICategoryRepository {
 
     category.name = name ? name : category.name;
     category.description = description ? description : category.description;
+    category.updated_at = new Date(new FormatCustomDate().dateTimeLocal())
 
     await repository.save(category);
 

@@ -1,6 +1,7 @@
 import { AppDataSource } from "../../database/AppDataSource";
 import { Color } from "../../entities/Color";
 import { Item } from "../../entities/Item";
+import { FormatCustomDate } from "../../utils/formatCustomDate";
 import { IColorRepository } from "../Interfaces/IColorRepository";
 
 const repository = AppDataSource.getRepository(Color);
@@ -76,6 +77,7 @@ export class ColorRepository implements IColorRepository {
     colorUpdate.hexadecimal = hexadecimal
       ? hexadecimal
       : colorUpdate.hexadecimal;
+    colorUpdate.updated_at = new Date(new FormatCustomDate().dateTimeLocal());
 
     await repository.save(colorUpdate);
 
