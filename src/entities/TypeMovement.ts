@@ -14,6 +14,8 @@ export class TypeMovement {
   description: string;
   @CreateDateColumn()
   created_at: Date;
+  @CreateDateColumn()
+  updated_at: Date;
 
 
   constructor() {
@@ -22,6 +24,9 @@ export class TypeMovement {
     }
     if (!this.created_at || this.created_at == undefined) {
       this.created_at = new Date(new FormatCustomDate().dateTimeLocal())
+    }
+    if (!this.updated_at || this.updated_at == undefined) {
+      this.updated_at = new Date(new FormatCustomDate().dateTimeLocal())
     }
   }
 }
