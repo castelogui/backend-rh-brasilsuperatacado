@@ -16,7 +16,8 @@
     "test:typeMovement": "jest --detectOpenHandles ./__tests__/integration/TypeMovement",
     "test:item": "jest --detectOpenHandles ./__tests__/integration/Item",
     "test:movement": "jest --detectOpenHandles ./__tests__/integration/Movement",
-    "test:user": "jest --detectOpenHandles ./__tests__/integration/User"
+    "test:user": "jest --detectOpenHandles ./__tests__/integration/User",
+    "test:department": "jest --detectOpenHandles ./__tests__/integration/Department"
   },
   "keywords": [],
   "author": "",
