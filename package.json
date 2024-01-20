@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "ts-node-dev --transpile-only src/server.ts",
     "dev:restart": "docker-compose down && docker-compose up -d && ts-node-dev --transpile-only src/server.ts",
+    "migration:gen": "typeorm-ts-node-commonjs -d ./src/database/AppDataSource.ts migration:generate ./src/database/migrations/default",
+    "migration:run": "typeorm-ts-node-commonjs -d ./src/database/AppDataSource.ts migration:run",
     "typeorm": "typeorm-ts-node-commonjs",
     "typeorm:mig-run": "typeorm-ts-node-commonjs migration:run -d src/database/AppDataSource.ts",
     "typeorm:mig-rev": "typeorm-ts-node-commonjs migration:revert -d src/database/AppDataSource.ts",
@@ -23,7 +25,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/jsonwebtoken": "^9.0.5",
     "@vercel/postgres": "^0.5.1",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
