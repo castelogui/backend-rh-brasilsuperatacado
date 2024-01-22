@@ -23,7 +23,32 @@ describe("Department => create", () => {
     });
     expect200(response);
   });
+  it("shouldn't let a department with the same name be created", async () => {
+    const response = await supertest(app).post("/departments").send({
+      code: "1",
+      name: "Teste",
+    });
+    expect(response.status).toBe(400);
+    expect(response.body).toBe("Department already exists");
+  });
+  it("should return an error if the name field does not exist", async () => {
+    const response = await supertest(app)
+      .post("/departments")
+      .send({ description: "teste", code: "1" });
+
+    expect(response.status).toBe(400);
+    expect(response.body).toBe("Request missing arguments: name");
+  });
+  it("should return an error if the code field does not exist", async () => {
+    const response = await supertest(app)
+      .post("/departments")
+      .send({ description: "teste", name: "TI" });
+
+    expect(response.status).toBe(400);
+    expect(response.body).toBe("Request missing arguments: code");
+  });
 });
+
 afterAll(async () => {
   await mockAppDataSource.drop();
   await mockAppDataSource.destroy();
