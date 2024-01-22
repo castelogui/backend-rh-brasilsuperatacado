@@ -9,7 +9,7 @@ type DepartmentRequest = {
 };
 
 export class CreateDepartmentService {
-  constructor(private departmentRepositort: IDeparmentRepository) {}
+  constructor(private departmentRepository: IDeparmentRepository) {}
   async execute({
     id,
     code,
@@ -29,7 +29,20 @@ export class CreateDepartmentService {
       ).toLowerCase()}`;
     }
 
-    const department = this.departmentRepositort.create({
+    const departmentExistsName = await this.departmentRepository.existsName(
+      name
+    );
+    if (departmentExistsName) {
+      return new Error("Department already exists with name");
+    }
+    const departmentExistsCode = await this.departmentRepository.existsCode(
+      code
+    );
+    if (departmentExistsCode) {
+      return new Error("Department already exists with code");
+    }
+
+    const department = this.departmentRepository.create({
       id,
       code,
       name,
