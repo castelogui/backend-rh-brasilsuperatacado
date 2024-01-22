@@ -32,7 +32,7 @@ export class CategoryRepository implements ICategoryRepository {
     return categories;
   }
 
-  async delete(id: string): Promise<boolean> {
+  async delete(id: string): Promise<boolean | void> {
     const category = await repository.findOneBy({ id });
 
     if (!category) {

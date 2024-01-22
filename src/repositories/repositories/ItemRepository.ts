@@ -23,7 +23,7 @@ export class ItemRepository implements IItemRepository {
 
     return items;
   }
-  async delete(id: string): Promise<boolean> {
+  async delete(id: string): Promise<boolean | void> {
     const item = await repository.findOneBy({ id });
 
     if (!item) {

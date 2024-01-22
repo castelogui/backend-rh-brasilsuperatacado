@@ -9,7 +9,7 @@ export class DeleteMovementService {
     private typeMovementRepository: ITypeMovementRepository,
     private itemRepository: IItemRepository
   ) {}
-  async execute(id: string): Promise<boolean | Error> {
+  async execute(id: string): Promise<boolean | Error | void> {
     const movement = await this.movementRepository.getOne(id);
 
     if (movement instanceof Movement) {
