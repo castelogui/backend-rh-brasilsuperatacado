@@ -44,7 +44,7 @@ const presetData = async (mock: string) => {
       for (const [key, items] of Object.entries(obj))
         if (Array.isArray(items)) for (const o of items) await postData(key, o);
   } catch (error) {
-    console.error(`Erro ao carregar o arquivo JSON: ${error.message}`);
+    console.error(`Erro ao carregar o arquivo JSON: ${error}`);
   }
 };
 
