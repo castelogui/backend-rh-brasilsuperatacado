@@ -21,7 +21,6 @@ describe("Department => create", () => {
       code: "1",
       name: "Teste",
     });
-    console.log(response.body);
     expect200(response);
   });
 });
