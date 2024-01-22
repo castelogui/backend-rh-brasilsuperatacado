@@ -25,11 +25,19 @@ describe("Department => create", () => {
   });
   it("shouldn't let a department with the same name be created", async () => {
     const response = await supertest(app).post("/departments").send({
-      code: "1",
+      code: "2",
       name: "Teste",
     });
     expect(response.status).toBe(400);
-    expect(response.body).toBe("Department already exists");
+    expect(response.body).toBe("Department already exists with name");
+  });
+  it("shouldn't let a department with the same code be created", async () => {
+    const response = await supertest(app).post("/departments").send({
+      code: "1",
+      name: "Testes",
+    });
+    expect(response.status).toBe(400);
+    expect(response.body).toBe("Department already exists with code");
   });
   it("should return an error if the name field does not exist", async () => {
     const response = await supertest(app)
