@@ -30,8 +30,12 @@ export class DepartmentRepository implements IDeparmentRepository {
     const result = await repository.findOneBy({ code });
     return !!result;
   }
-  getOne(id: string): Promise<Department | Error> {
-    throw new Error("Method not implemented.");
+  async getOne(id: string): Promise<Department | Error> {
+    const result = await repository.findOneBy({ id });
+    if (!result) {
+      return new Error("Department does not exists");
+    }
+    return result;
   }
   getAll(): Promise<Department[]> {
     throw new Error("Method not implemented.");
