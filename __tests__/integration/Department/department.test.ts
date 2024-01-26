@@ -62,7 +62,7 @@ describe("Department => get", () => {
   it("should return a department", async () => {
     const department = await supertest(app)
       .post("/departments")
-      .send({ name: "get department", code: "3" });
+      .send({ id: "2", name: "get department", code: "3" });
 
     const response = await supertest(app).get(
       `/departments/${department.body.id}`
@@ -74,8 +74,8 @@ describe("Department => get", () => {
     expect(response.status).toBe(400);
     expect(response.body).toBe("Department does not exists");
   });
-  it("should return a list departments", async ()=>{
-    const departments = await supertest(app).get("/departments")
+  it("should return a list departments", async () => {
+    const departments = await supertest(app).get("/departments");
 
     expect(departments.status).toBe(200);
     expect(Array.isArray(departments.body)).toBe(true);
@@ -85,9 +85,39 @@ describe("Department => get", () => {
         expect(obj[key]).not.toBeNull();
       });
     });
-  })
+  });
 });
-
+describe("Department => update", () => {
+  it("should not update department if the id is incorrect", async () => {
+    const response = await supertest(app)
+      .put("/departments/1234")
+      .send({ name: "updated" });
+    expect(response.status).toBe(400);
+    expect(response.body).toBe("Department does not exists");
+  });
+  it("should be update department", async () => {
+    const response = await supertest(app)
+      .put("/departments/2")
+      .send({ name: "updated" });
+    expect(response.status).toBe(200);
+    expect(response.body.name).toBe("updated");
+    expect200(response);
+  });
+  it("should not be update department if already exists name", async () => {
+    const response = await supertest(app)
+      .put("/departments/2")
+      .send({ name: "Teste" });
+    expect(response.status).toBe(400);
+    expect(response.body).toBe("Already exists one department with name");
+  });
+  it("should not be update department if already exists code", async () => {
+    const response = await supertest(app)
+      .put("/departments/2")
+      .send({ code: "1" });
+    expect(response.status).toBe(400);
+    expect(response.body).toBe("Already exists one department with code");
+  });
+});
 afterAll(async () => {
   await mockAppDataSource.drop();
   await mockAppDataSource.destroy();
