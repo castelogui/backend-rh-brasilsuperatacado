@@ -28,6 +28,7 @@ import { createUserFactory } from "./modules/User/createUser/CreateUserFactory";
 import { createDepartmentFactory } from "./modules/Department/createDepartment/CreateDepartmentFactory";
 import { getOneDepartmentFactory } from "./modules/Department/getOneDepartment/GetOneDepartmentFactory";
 import { getAllDepartmentFactory } from "./modules/Department/getAllDepartment/GetAllDepartmentFactory";
+import { updateDepartmentFactory } from "./modules/Department/updateDepartment/UpdateDepartmentFactory";
 
 const routes = Router();
 
@@ -125,6 +126,9 @@ routes.get("/departments/:id", (request, response) =>
   getOneDepartmentFactory().handle(request, response)
 );
 routes.get("/departments", (request, response) =>
-  getAllDepartmentFactory().handle(request, response)
+getAllDepartmentFactory().handle(request, response)
+);
+routes.put("/departments/:id", (request, response) =>
+  updateDepartmentFactory().handle(request, response)
 );
 export { routes };
