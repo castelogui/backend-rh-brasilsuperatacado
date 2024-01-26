@@ -5,8 +5,9 @@ import { app } from "../../../src/app";
 const mockAppDataSource = new MockAppDataSource();
 
 function expect200(response: any) {
+  expect(response.error).toBe(false);
+  expect(response.status).toBe(200);
   return Object.keys(response.body).forEach((key) => {
-    expect(response.status).toBe(200);
     expect(response.body).toHaveProperty(key);
     expect(response.body[key]).not.toBeNull();
   });
@@ -55,6 +56,36 @@ describe("Department => create", () => {
     expect(response.status).toBe(400);
     expect(response.body).toBe("Request missing arguments: code");
   });
+});
+
+describe("Department => get", () => {
+  it("should return a department", async () => {
+    const department = await supertest(app)
+      .post("/departments")
+      .send({ name: "get department", code: "3" });
+
+    const response = await supertest(app).get(
+      `/departments/${department.body.id}`
+    );
+    expect200(response);
+  });
+  it("should not be return a department if id is incorrect or invalid", async () => {
+    const response = await supertest(app).get("/departments/123");
+    expect(response.status).toBe(400);
+    expect(response.body).toBe("Department does not exists");
+  });
+  it("should return a list departments", async ()=>{
+    const departments = await supertest(app).get("/departments")
+
+    expect(departments.status).toBe(200);
+    expect(Array.isArray(departments.body)).toBe(true);
+    departments.body.forEach((obj: any) => {
+      Object.keys(obj).forEach((key) => {
+        expect(obj).toHaveProperty(key);
+        expect(obj[key]).not.toBeNull();
+      });
+    });
+  })
 });
 
 afterAll(async () => {
