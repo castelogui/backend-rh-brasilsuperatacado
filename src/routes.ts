@@ -26,7 +26,8 @@ import { updateMovementFactory } from "./modules/Movement/updateMovement/UpdateM
 import { deleteMovementFactory } from "./modules/Movement/deleteMovement/DeleteMovementFactory";
 import { createUserFactory } from "./modules/User/createUser/CreateUserFactory";
 import { createDepartmentFactory } from "./modules/Department/createDepartment/CreateDepartmentFactory";
-import { GetOneDepartmentFactory } from "./modules/Department/getOneDepartment/GetOneDepartmentFactory";
+import { getOneDepartmentFactory } from "./modules/Department/getOneDepartment/GetOneDepartmentFactory";
+import { getAllDepartmentFactory } from "./modules/Department/getAllDepartment/GetAllDepartmentFactory";
 
 const routes = Router();
 
@@ -121,6 +122,9 @@ routes.post("/departments", (request, response) =>
   createDepartmentFactory().handle(request, response)
 );
 routes.get("/departments/:id", (request, response) =>
-  GetOneDepartmentFactory().handle(request, response)
+  getOneDepartmentFactory().handle(request, response)
+);
+routes.get("/departments", (request, response) =>
+  getAllDepartmentFactory().handle(request, response)
 );
 export { routes };

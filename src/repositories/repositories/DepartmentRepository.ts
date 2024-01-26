@@ -37,8 +37,9 @@ export class DepartmentRepository implements IDeparmentRepository {
     }
     return result;
   }
-  getAll(): Promise<Department[]> {
-    throw new Error("Method not implemented.");
+  async getAll(): Promise<Department[]> {
+    const result = await repository.find();
+    return result;
   }
   delete(id: string): Promise<boolean | void> {
     throw new Error("Method not implemented.");
