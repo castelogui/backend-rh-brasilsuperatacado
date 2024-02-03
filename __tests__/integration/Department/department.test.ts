@@ -19,7 +19,7 @@ beforeAll(async () => {
 describe("Department => create", () => {
   it("should be create a department", async () => {
     const response = await supertest(app).post("/departments").send({
-      code: "1",
+      id: "1",code: "1",
       name: "Teste",
     });
     expect200(response);
@@ -116,6 +116,23 @@ describe("Department => update", () => {
       .send({ code: "1" });
     expect(response.status).toBe(400);
     expect(response.body).toBe("Already exists one department with code");
+  });
+});
+describe("Department => delete", () => {
+  it("should not be delete department if id is incorrect", async () => {
+    const response = await supertest(app).delete(
+      "/departments/123456789123456"
+    );
+
+    expect(response.status).toBe(400);
+    expect(response.body).toBe("Department does not exists");
+  });
+  it("should be delete department", async () => {
+    const response = await supertest(app).delete(
+      `/departments/1`
+    );
+
+    expect(response.status).toBe(204);
   });
 });
 afterAll(async () => {
