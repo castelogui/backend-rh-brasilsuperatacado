@@ -8,5 +8,5 @@ export interface IDeparmentRepository {
   getAll(): Promise<Department[]>;
   delete(id: string): Promise<boolean | void>;
   update({ id, code, name, description }): Promise<Department | Error>;
-  existsItem(id: string): Promise<boolean>;
+  existsUser(id: string): Promise<boolean>;
 }
