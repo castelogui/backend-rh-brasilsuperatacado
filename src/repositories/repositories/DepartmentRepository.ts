@@ -42,8 +42,15 @@ export class DepartmentRepository implements IDeparmentRepository {
     const result = await repository.find();
     return result;
   }
-  delete(id: string): Promise<boolean | void> {
-    throw new Error("Method not implemented.");
+  async delete(id: string): Promise<boolean | void > {
+    const department = await repository.findOneBy({ id });
+
+    if (!department) {
+      return false;
+    }
+    await repository.remove(department);
+
+    return;
   }
   async update({
     id,
@@ -76,7 +83,7 @@ export class DepartmentRepository implements IDeparmentRepository {
 
     return department;
   }
-  existsItem(id: string): Promise<boolean> {
+  existsUser(id: string): Promise<boolean> {
     throw new Error("Method not implemented.");
   }
 }
